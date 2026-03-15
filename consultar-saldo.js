@@ -1,7 +1,7 @@
 const { CloudantV1 } = require('@ibm-cloud/cloudant');
 const { IamAuthenticator } = require('ibm-cloud-sdk-core');
 
-async function consultarSaldo() {
+async function consultarTodosUsuarios() {
   const apiKey = process.env.CLOUDANT_API_KEY.replace(/['"]+/g, '').trim();
   const url = process.env.CLOUDANT_URL.replace(/['"]+/g, '').trim();
 
@@ -10,18 +10,23 @@ async function consultarSaldo() {
   service.setServiceUrl(url);
 
   try {
-    const response = await service.getDocument({
+    const response = await service.postAllDocs({
       db: 'users',
-      docId: '71b51e0c6f951946f3a3d513d9d3b6ad' 
+      includeDocs: true
     });
 
-    console.log(`🏦 BANCO DIGITAL - CONSULTA DE SALDO`);
-    console.log(`👤 Cliente: ${response.result.nome}`);
-    console.log(`💰 Saldo Atual: R$ ${response.result.saldo.toFixed(2)}`);
+    console.log(`🏦 BANCO DIGITAL - LISTA DE CLIENTES`);
+    response.result.rows.forEach(row => {
+      const conta = row.doc;
+      console.log(`-----------------------------------`);
+      console.log(`👤 Nome: ${conta.nome || 'Não definido'}`);
+      console.log(`💰 Saldo: R$ ${conta.saldo ? conta.saldo.toFixed(2) : '0.00'}`);
+      console.log(`🆔 ID Real: ${conta._id}`);
+    });
   } catch (err) {
-    console.error("❌ Erro ao consultar saldo:", err.message);
+    console.error("❌ Erro ao buscar no banco:", err.message);
     process.exit(1);
   }
 }
 
-consultarSaldo();
+consultarTodosUsuarios();
