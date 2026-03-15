@@ -2,12 +2,16 @@ const { CloudantV1 } = require('@ibm-cloud/cloudant');
 const { IamAuthenticator } = require('ibm-cloud-sdk-core');
 
 async function testConnection() {
+  // Limpando espaços ou aspas invisíveis que o GitHub possa enviar
+  const apiKey = process.env.CLOUDANT_API_KEY.replace(/['"]+/g, '').trim();
+  const url = process.env.CLOUDANT_URL.replace(/['"]+/g, '').trim();
+
   const authenticator = new IamAuthenticator({
-    apikey: process.env.CLOUDANT_API_KEY
+    apikey: apiKey
   });
 
   const service = CloudantV1.newInstance({ authenticator });
-  service.setServiceUrl(process.env.CLOUDANT_URL);
+  service.setServiceUrl(url);
 
   try {
     const response = await service.getServerInformation();
