@@ -14,8 +14,8 @@ jobs:
       - name: Instalar dependencias
         run: npm install @ibm-cloud/cloudant ibm-cloud-sdk-core
 
-      - name: Consultar Saldo
-        run: node consultar-saldo.js
+      - name: FECHAMENTO - Tesouraria Interbancaria
+        run: node mercado-interbancario.js
         env:
           CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
           CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
