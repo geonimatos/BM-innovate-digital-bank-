@@ -2,32 +2,27 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innovate Digital Bank</title>
     <style>
         body { font-family: sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 320px; padding: 30px; text-align: center; border-top: 8px solid #0062ff; }
-        .logo { color: #0062ff; font-weight: bold; margin-bottom: 20px; }
-        .balance-value { font-size: 2rem; font-weight: bold; margin: 10px 0; color: #000; }
-        .btn { background: #0062ff; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: bold; }
+        .balance-value { font-size: 2rem; font-weight: bold; margin: 15px 0; color: #000; }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="logo">INNOVATE BANK</div>
+        <div style="color: #0062ff; font-weight: bold; margin-bottom: 20px;">INNOVATE BANK</div>
         <p>Olá, <strong>Geonimatos</strong></p>
         <p style="color: #666; font-size: 0.9rem;">Saldo disponível</p>
-        <!-- A linha abaixo é a que o script vai preencher -->
         <div id="saldo-valor" class="balance-value">Carregando...</div>
-        <button class="btn">Área Pix</button>
+        <button style="background: #0062ff; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: bold;">Área Pix</button>
     </div>
 
     <script>
-        // Simulando a busca do saldo real na IBM Cloud
+        // Simulando a busca do saldo real que o GitHub Actions acabou de atualizar
         setTimeout(() => {
-            document.getElementById('saldo-valor').innerText = 'R$ 800,00';
-            console.log("Saldo sincronizado!");
-        }, 1500); // 1.5 segundos de "charme" no carregamento
+            document.getElementById('saldo-valor').innerText = 'R$ 600,00';
+        }, 1500);
     </script>
 </body>
 </html>
