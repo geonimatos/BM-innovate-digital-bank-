@@ -6,12 +6,17 @@ jobs:
   banco-digital-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout do Codigo
         uses: actions/checkout@v3
       - name: Instalar dependencias
         run: npm install @ibm-cloud/cloudant ibm-cloud-sdk-core
-      - name: CORPORATE - Relatorio de Saude Financeira (CFO)
-        run: node relatorio-corporativo.js
+      - name: CORPORATE - Processar Folha Salarial
+        run: node folha-pagamento.js
+        env:
+          CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
+          CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
+      - name: SEGURANCA - Congelamento e Consulta
+        run: node consultar-saldo.js
         env:
           CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
           CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
