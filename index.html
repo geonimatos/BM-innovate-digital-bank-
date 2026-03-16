@@ -9,13 +9,10 @@
         .card-main { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39, 174, 96, 0.15); width: 340px; padding: 25px; text-align: center; border-top: 10px solid #27ae60; margin-bottom: 20px; }
         .logo { color: #27ae60; font-weight: bold; font-size: 1.1rem; letter-spacing: 1.5px; margin-bottom: 20px; text-transform: uppercase; }
         .balance-value { font-size: 2.2rem; font-weight: 800; color: #1b5e20; margin-bottom: 15px; }
-        
         .limit-section { text-align: left; margin-top: 15px; padding: 15px; background: #f1f8e9; border-radius: 15px; }
-        
-        /* Menu Moderno sem DOC */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 340px; }
         .menu-item { background: #ffffff; padding: 18px; border-radius: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
-        .menu-item:hover { border: 1px solid #27ae60; transform: scale(1.02); }
+        .menu-item:hover { border: 1px solid #27ae60; }
         .menu-text { font-size: 0.7rem; font-weight: bold; color: #333; text-transform: uppercase; display: block; margin-top: 5px; }
     </style>
 </head>
@@ -23,7 +20,7 @@
     <div class="card-main">
         <div class="logo">INNOVATE BANK</div>
         <p style="color: #666; font-size: 0.85rem; margin: 0;">Saldo disponível <span id="toggle-eye" style="cursor:pointer">👁️</span></p>
-        <div id="saldo-valor" class="balance-value">R$ 3.046,02</div>
+        <div id="saldo-valor" class="balance-value">R$ 2.035,52</div>
         
         <div class="limit-section">
             <div style="display: flex; justify-content: space-between;">
@@ -36,10 +33,9 @@
         </div>
     </div>
 
-    <!-- Menu Atualizado -->
     <div class="menu-grid">
         <div class="menu-item"><span>⚡</span><span class="menu-text">Área Pix</span></div>
-        <div class="menu-item"><span>🏦</span><span class="menu-text">TED</span></div>
+        <div class="menu-item" style="border: 1px solid #27ae60;"><span>🏦</span><span class="menu-text">TED</span></div>
         <div class="menu-item"><span>🌎</span><span class="menu-text">Internacional</span></div>
         <div class="menu-item" style="background: #f1f8e9;"><span>🏧</span><span class="menu-text">Maquininha</span></div>
     </div>
@@ -50,7 +46,7 @@
         let visivel = true;
         eye.addEventListener('click', () => {
             if(visivel) { saldo.innerText = "R$ ••••••"; eye.innerText = "🙈"; } 
-            else { saldo.innerText = "R$ 3.046,02"; eye.innerText = "👁️"; }
+            else { saldo.innerText = "R$ 2.035,52"; eye.innerText = "👁️"; }
             visivel = !visivel;
         });
     </script>
