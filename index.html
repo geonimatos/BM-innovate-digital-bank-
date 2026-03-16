@@ -3,48 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovate Digital Bank | Verde</title>
+    <title>Innovate Digital Bank | Central de Crédito</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #e8f5e9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39, 174, 96, 0.15); width: 340px; padding: 35px; text-align: center; border-top: 10px solid #27ae60; }
-        .logo { color: #27ae60; font-weight: bold; font-size: 1.3rem; letter-spacing: 1.5px; margin-bottom: 30px; text-transform: uppercase; }
-        .balance-label { color: #666; font-size: 0.85rem; margin-bottom: 5px; }
-        .balance-value { font-size: 2.6rem; font-weight: 800; color: #1b5e20; margin-bottom: 30px; }
-        .btn-main { background: #27ae60; color: white; border: none; padding: 16px; border-radius: 14px; width: 100%; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-bottom: 30px; transition: 0.3s; }
-        .extrato-container { text-align: left; border-top: 1px solid #eee; padding-top: 25px; }
-        .extrato-title { font-size: 0.9rem; font-weight: bold; color: #27ae60; margin-bottom: 15px; display: block; }
-        .transacao { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 10px 0; border-bottom: 1px solid #f1f8e9; }
-        .valor-positivo { color: #27ae60; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e8f5e9; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        .card-main { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39, 174, 96, 0.15); width: 340px; padding: 25px; text-align: center; border-top: 10px solid #27ae60; margin-bottom: 20px; }
+        .logo { color: #27ae60; font-weight: bold; font-size: 1.2rem; letter-spacing: 1.5px; margin-bottom: 20px; text-transform: uppercase; }
+        .balance-value { font-size: 2.2rem; font-weight: 800; color: #1b5e20; margin-bottom: 15px; }
+        
+        /* Seção de Crédito */
+        .credit-section { width: 340px; text-align: left; }
+        .section-title { color: #1b5e20; font-weight: bold; margin-bottom: 15px; font-size: 1rem; display: block; }
+        .loan-card { background: #ffffff; border-radius: 20px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #27ae60; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .loan-type { font-size: 0.8rem; color: #27ae60; font-weight: bold; text-transform: uppercase; }
+        .loan-desc { font-size: 1rem; font-weight: bold; color: #333; margin: 5px 0; }
+        .loan-info { font-size: 0.75rem; color: #666; }
+        .btn-action { background: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-top: 10px; width: 100%; }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="card-main">
         <div class="logo">INNOVATE BANK</div>
-        <p style="color: #333;">Bem-vindo, <strong>Geonimatos</strong></p>
-        
-        <div class="balance-label">Saldo disponível em conta</div>
-        <div id="saldo-valor" class="balance-value">Carregando...</div>
-        
-        <button class="btn-main">Área Pix</button>
+        <p style="color: #666; font-size: 0.85rem; margin: 0;">Saldo disponível</p>
+        <div id="saldo-valor" class="balance-value">...</div>
+        <button style="background: #27ae60; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer;">Área Pix</button>
+    </div>
 
-        <div class="extrato-container">
-            <span class="extrato-title">Histórico de Transações</span>
-            <div class="transacao">
-                <span>Aporte de Investimento</span>
-                <span class="valor-positivo">+ R$ 3.800,00</span>
-            </div>
-            <div class="transacao">
-                <span>Saldo Anterior</span>
-                <span>R$ 200,00</span>
-            </div>
+    <div class="credit-section">
+        <span class="section-title">Crédito para Você 🚀</span>
+
+        <!-- Empréstimo Pessoal -->
+        <div class="loan-card">
+            <span class="loan-type">Dinheiro na Hora</span>
+            <div class="loan-desc">Crédito Pessoal</div>
+            <div class="loan-info">Limite: R$ 40.000,00 | Taxa: 1.99% a.m.</div>
+            <button class="btn-action">Simular Empréstimo</button>
+        </div>
+
+        <!-- Veículos -->
+        <div class="loan-card" style="border-left-color: #2ecc71;">
+            <span class="loan-type">Automóveis</span>
+            <div class="loan-desc">Financiamento de Veículos</div>
+            <div class="loan-info">Carros e motos com carência de 60 dias.</div>
+            <button class="btn-action">Ver Ofertas</button>
+        </div>
+
+        <!-- Imóveis / Propriedades Rurais -->
+        <div class="loan-card" style="border-left-color: #16a085;">
+            <span class="loan-type">Imobiliário & Rural</span>
+            <div class="loan-desc">Casas, Aptos e Fazendas</div>
+            <div class="loan-info">Taxas especiais para propriedades rurais.</div>
+            <button class="btn-action">Simular Imóvel</button>
         </div>
     </div>
 
     <script>
-        // Sincronizando com o saldo real da execução #24
-        setTimeout(() => {
-            document.getElementById('saldo-valor').innerText = 'R$ 4.000,00';
-        }, 1200);
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('saldo-valor').innerText = 'R$ 4.000,00';
+            }, 1000);
+        };
     </script>
 </body>
 </html>
