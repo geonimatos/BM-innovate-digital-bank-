@@ -3,47 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovate Bank | Investimentos</title>
+    <title>Innovate Bank | Auditoria</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #e8f5e9; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
-        .card-main { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39,174,96,0.15); width: 340px; padding: 25px; text-align: center; border-top: 10px solid #27ae60; margin-bottom: 20px; }
-        .logo { color: #27ae60; font-weight: bold; font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; }
+        .card { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39,174,96,0.15); width: 340px; padding: 25px; text-align: center; border-top: 10px solid #27ae60; margin-bottom: 20px; }
         .balance-value { font-size: 2.2rem; font-weight: 800; color: #1b5e20; margin-bottom: 15px; }
-        
-        /* Card de Investimento */
-        .invest-card { background: #1b5e20; color: white; border-radius: 20px; width: 340px; padding: 20px; text-align: left; box-sizing: border-box; }
-        .invest-title { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: #a5d6a7; display: block; margin-bottom: 10px; }
-        .invest-yield { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
-        .invest-info { font-size: 0.75rem; color: #c8e6c9; }
-        .btn-invest { background: #ffffff; color: #1b5e20; border: none; padding: 10px; border-radius: 10px; width: 100%; margin-top: 15px; cursor: pointer; font-weight: bold; }
+        .audit-panel { background: #fff; border-radius: 20px; width: 340px; padding: 20px; border: 1px solid #ddd; text-align: left; font-size: 0.8rem; box-sizing: border-box; }
+        .audit-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f0f0f0; }
+        .text-red { color: #c0392b; font-weight: bold; }
+        .text-green { color: #27ae60; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="card-main">
-        <div class="logo">INNOVATE BANK</div>
-        <p style="color: #666; font-size: 0.85rem; margin: 0;">Saldo disponível <span id="toggle-eye" style="cursor:pointer">👁️</span></p>
-        <div id="saldo-valor" class="balance-value">R$ 2.035,52</div>
-        <button style="background: #27ae60; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer;">Área Pix</button>
+    <div class="card">
+        <div style="color: #27ae60; font-weight: bold; margin-bottom: 20px;">INNOVATE BANK</div>
+        <p style="color: #666; font-size: 0.85rem; margin: 0;">Saldo em conta</p>
+        <div class="balance-value">R$ 2.035,52</div>
+        <button style="background: #27ae60; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold;">Área Pix</button>
     </div>
 
-    <!-- Novo Card de Investimentos -->
-    <div class="invest-card">
-        <span class="invest-title">📈 Investimentos CDB/LCI</span>
-        <div class="invest-yield">Rendimento: 100% do CDI</div>
-        <div class="invest-info">Taxa Atual: 14.90% ao ano</div>
-        <p style="font-size: 0.7rem; margin-top: 10px;">Seu dinheiro rende mais que a poupança com segurança total.</p>
-        <button class="btn-invest">Aplicar Saldo</button>
+    <div class="audit-panel">
+        <strong style="color: #1b5e20; display: block; margin-bottom: 10px;">📊 AUDITORIA DE CUSTOS (CET)</strong>
+        <div class="audit-row"><span>Taxas de TED</span> <span class="text-red">- R$ 10,50</span></div>
+        <div class="audit-row"><span>IOF Internacional</span> <span class="text-red">- R$ 11,00</span></div>
+        <div class="audit-row"><span>Spread Cambial</span> <span class="text-red">- R$ 40,00</span></div>
+        <div class="audit-row"><span>Rendimento CDB</span> <span class="text-green">+ R$ 1,02</span></div>
+        <div style="margin-top: 10px; font-weight: bold; color: #333;">Status: Conta Auditada ✅</div>
     </div>
-
-    <script>
-        const eye = document.getElementById('toggle-eye');
-        const saldo = document.getElementById('saldo-valor');
-        let visivel = true;
-        eye.addEventListener('click', () => {
-            if(visivel) { saldo.innerText = "R$ ••••••"; eye.innerText = "🙈"; } 
-            else { saldo.innerText = "R$ 2.035,52"; eye.innerText = "👁️"; }
-            visivel = !visivel;
-        });
-    </script>
 </body>
 </html>
