@@ -3,48 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovate Bank | Future</title>
+    <title>Innovate | Private Bank</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #000; color: #fff; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .card-virtual { background: linear-gradient(135deg, #1a1a1a 0%, #27ae60 100%); border-radius: 20px; padding: 25px; width: 100%; max-width: 320px; margin-top: 20px; box-shadow: 0 10px 20px rgba(39,174,96,0.3); border: 1px solid #444; }
-        .voice-btn { background: #27ae60; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px #27ae60; border: none; }
-        .voice-btn:active { transform: scale(0.9); }
-        #ia-status { font-size: 0.8rem; color: #27ae60; margin-top: 10px; height: 20px; }
+        .currency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 340px; margin-bottom: 20px; }
+        .currency-box { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #333; text-align: center; }
+        .chart-container { background: #111; border-radius: 20px; padding: 20px; width: 100%; max-width: 340px; border: 1px solid #222; }
+        .chart-line { display: flex; align-items: flex-end; justify-content: space-between; height: 100px; padding-top: 20px; }
+        .bar { width: 30px; background: #27ae60; border-radius: 5px 5px 0 0; position: relative; }
+        .bar::after { content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; color: #888; }
     </style>
 </head>
 <body>
-    <div style="text-align: center;">
-        <small style="color: #888;">Saldo Seguro</small>
-        <div style="font-size: 2.2rem; font-weight: bold;">R$ 1.537,02</div>
+    <div style="text-align: center; margin-bottom: 30px;">
+        <div style="font-size: 2.2rem; font-weight: bold; color: #27ae60;">R$ 1.537,02</div>
+        <small style="color: #888;">Crescimento de 14.90% a.a.</small>
     </div>
 
-    <!-- Seção Cartão Virtual -->
-    <div class="card-virtual">
-        <div style="font-size: 0.7rem; letter-spacing: 2px;">CARTÃO VIRTUAL</div>
-        <div style="font-size: 1.2rem; margin: 20px 0; font-family: monospace;" id="num-cartao">**** **** **** 8842</div>
-        <div style="display: flex; justify-content: space-between;">
-            <span>CVV: <strong id="cvv-cartao">342</strong></span>
-            <span style="color: #fff; font-size: 0.7rem;">EXPIRA EM: 60s</span>
+    <!-- Conversor Multi-Moeda -->
+    <div class="currency-grid">
+        <div class="currency-box">🇺🇸 USD <div style="font-weight: bold; color: #27ae60; margin-top: 5px;">$ 301.37</div></div>
+        <div class="currency-box">🇪🇺 EUR <div style="font-weight: bold; color: #27ae60; margin-top: 5px;">€ 279.45</div></div>
+    </div>
+
+    <!-- Gráfico de Investimentos -->
+    <div class="chart-container">
+        <small style="color: #888; text-transform: uppercase; font-size: 0.7rem;">Evolução do Patrimônio (7d)</small>
+        <div class="chart-line">
+            <div class="bar" style="height: 60%;"></div>
+            <div class="bar" style="height: 65%;"></div>
+            <div class="bar" style="height: 70%;"></div>
+            <div class="bar" style="height: 75%;"></div>
+            <div class="bar" style="height: 85%;"></div>
+            <div class="bar" style="height: 95%;"></div>
+            <div class="bar" style="height: 100%; background: #fff; box-shadow: 0 0 10px #27ae60;"></div>
         </div>
     </div>
-
-    <button class="voice-btn" onclick="ouvirIA()">🎙️</button>
-    <div id="ia-status"></div>
-
-    <script>
-        function ouvirIA() {
-            const status = document.getElementById('ia-status');
-            status.innerText = "Ouvindo...";
-            setTimeout(() => {
-                status.innerText = "IA: Seu saldo é R$ 1.537,02. Precisa de algo mais?";
-            }, 2000);
-        }
-
-        // Simula a mudança do número do cartão
-        setInterval(() => {
-            document.getElementById('num-cartao').innerText = "**** **** **** " + Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('cvv-cartao').innerText = Math.floor(100 + Math.random() * 900);
-        }, 60000);
-    </script>
 </body>
 </html>
