@@ -14,8 +14,8 @@ jobs:
       - name: Instalar dependencias
         run: npm install @ibm-cloud/cloudant ibm-cloud-sdk-core
 
-      - name: BACEN - Monitoramento de Redesconto
-        run: node redesconto-bacen.js
+      - name: GLOBAL - Conexao Gateway SWIFT
+        run: node swift-gateway.js
         env:
           CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
           CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
