@@ -1,15 +1,19 @@
 name: Integracao IBM Cloud
+
 on:
   push:
     branches: [ main, master ]
+
 jobs:
   banco-digital-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Instalar dependencias
         run: npm install @ibm-cloud/cloudant ibm-cloud-sdk-core
+
       - name: RESERVA - Proteger Saldo
         run: node guardar-reserva.js
         env:
