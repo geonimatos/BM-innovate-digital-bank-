@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovate Super App</title>
+    <title>Innovate Bank | Biometric</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #000; color: #fff; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .push-notificacao { background: #333; border-left: 5px solid #27ae60; padding: 15px; border-radius: 12px; width: 100%; max-width: 360px; margin-bottom: 20px; font-size: 0.8rem; animation: slideIn 0.5s ease-out; }
-        .card-app { background: #111; border-radius: 25px; padding: 25px; width: 100%; max-width: 360px; border: 1px solid #222; margin-bottom: 20px; }
-        .grafico-container { margin-top: 20px; text-align: left; }
-        .barra-gasto { height: 10px; border-radius: 5px; background: #222; margin-bottom: 10px; position: relative; }
-        .preenchimento { height: 100%; border-radius: 5px; background: #27ae60; }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        body { font-family: 'Segoe UI', sans-serif; background: #000; color: #fff; margin: 0; padding: 20px; overflow-x: hidden; }
+        
+        /* Tela de Biometria */
+        #tela-bloqueio { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .face-id-scan { width: 100px; height: 100px; border: 3px solid #27ae60; border-radius: 20px; position: relative; animation: pulse 2s infinite; }
+        .line { position: absolute; width: 100%; height: 2px; background: #27ae60; top: 0; animation: scan 2s linear infinite; box-shadow: 0 0 10px #27ae60; }
+        
+        /* App Principal */
+        .app-content { display: none; opacity: 0; transition: opacity 1s; width: 100%; max-width: 360px; margin: 0 auto; }
+        .cashback-badge { background: #1a1a1a; border: 1px solid #27ae60; color: #27ae60; padding: 10px; border-radius: 12px; margin-bottom: 20px; font-size: 0.8rem; text-align: center; }
+        .card { background: #111; border-radius: 25px; padding: 25px; border: 1px solid #333; }
+        
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
     </style>
 </head>
 <body>
-    <div id="alerta" class="push-notificacao">
-        <strong>🔔 Notificação:</strong><br>
-        Processando última transação...
+    <div id="tela-bloqueio">
+        <div class="face-id-scan"><div class="line"></div></div>
+        <p style="margin-top: 20px; color: #27ae60; letter-spacing: 2px;">AUTENTICANDO...</p>
     </div>
 
-    <div class="card-app">
-        <small style="color: #666;">Saldo em conta</small>
-        <div style="font-size: 2rem; font-weight: bold; color: #27ae60;">R$ 1.535,52</div>
+    <div class="app-content" id="app">
+        <div class="cashback-badge">💎 Você ganhou <strong>R$ 1,50</strong> de Cashback hoje!</div>
         
-        <div class="grafico-container">
-            <small style="color: #aaa;">Gastos por Categoria</small>
-            <div style="font-size: 0.7rem; margin: 10px 0 5px;">Lazer (R$ 150,00)</div>
-            <div class="barra-gasto"><div class="preenchimento" style="width: 40%;"></div></div>
-            <div style="font-size: 0.7rem; margin: 10px 0 5px;">Mercado (R$ 400,00)</div>
-            <div class="barra-gasto"><div class="preenchimento" style="width: 70%;"></div></div>
+        <div class="card">
+            <small style="color: #888;">Saldo com Cashback</small>
+            <div style="font-size: 2rem; font-weight: bold; color: #27ae60; margin: 10px 0;">R$ 1.537,02</div>
+            <div style="font-size: 0.75rem; color: #aaa;">Limites e Gráficos atualizados.</div>
         </div>
     </div>
 
     <script>
+        // Simulando autenticação bem-sucedida
         setTimeout(() => {
-            document.getElementById('alerta').innerHTML = "<strong>🔔 Notificação:</strong><br>Você gastou R$ 150,00 em Lazer. Saldo atualizado!";
-        }, 2000);
+            document.getElementById('tela-bloqueio').style.display = 'none';
+            const app = document.getElementById('app');
+            app.style.display = 'block';
+            setTimeout(() => app.style.opacity = '1', 50);
+        }, 3000);
     </script>
 </body>
 </html>
