@@ -1,27 +1,17 @@
 name: Integracao IBM Cloud
-
 on:
   push:
     branches: [ main, master ]
-
 jobs:
   banco-digital-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do Codigo
+      - name: Checkout
         uses: actions/checkout@v3
-
       - name: Instalar dependencias
         run: npm install @ibm-cloud/cloudant ibm-cloud-sdk-core
-
-      - name: AUDITORIA - Processar Relatorio de Custos (CET)
-        run: node auditoria-cet.js
-        env:
-          CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
-          CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
-
-      - name: CONSULTA - Validar Integridade dos Dados
-        run: node consultar-saldo.js
+      - name: IA - Gerar Conselho Financeiro
+        run: node gerente-ia.js
         env:
           CLOUDANT_API_KEY: ${{ secrets.CLOUDANT_API_KEY }}
           CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
