@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innovate Digital Bank | Verde</title>
     <style>
-        /* Paleta de Cores: Verde (#27ae60) e Branco (#ffffff) */
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #e8f5e9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e8f5e9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background: #ffffff; border-radius: 28px; box-shadow: 0 15px 35px rgba(39, 174, 96, 0.15); width: 340px; padding: 35px; text-align: center; border-top: 10px solid #27ae60; }
         .logo { color: #27ae60; font-weight: bold; font-size: 1.3rem; letter-spacing: 1.5px; margin-bottom: 30px; text-transform: uppercase; }
         .balance-label { color: #666; font-size: 0.85rem; margin-bottom: 5px; }
         .balance-value { font-size: 2.6rem; font-weight: 800; color: #1b5e20; margin-bottom: 30px; }
         .btn-main { background: #27ae60; color: white; border: none; padding: 16px; border-radius: 14px; width: 100%; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-bottom: 30px; transition: 0.3s; }
-        .btn-main:hover { background: #219150; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); }
         .extrato-container { text-align: left; border-top: 1px solid #eee; padding-top: 25px; }
         .extrato-title { font-size: 0.9rem; font-weight: bold; color: #27ae60; margin-bottom: 15px; display: block; }
         .transacao { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 10px 0; border-bottom: 1px solid #f1f8e9; }
-        .valor-negativo { color: #c0392b; font-weight: bold; }
+        .valor-positivo { color: #27ae60; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -25,28 +23,28 @@
         <p style="color: #333;">Bem-vindo, <strong>Geonimatos</strong></p>
         
         <div class="balance-label">Saldo disponível em conta</div>
-        <div id="saldo-valor" class="balance-value">...</div>
+        <div id="saldo-valor" class="balance-value">Carregando...</div>
         
         <button class="btn-main">Área Pix</button>
 
         <div class="extrato-container">
             <span class="extrato-title">Histórico de Transações</span>
             <div class="transacao">
-                <span>Pagamento de Teste</span>
-                <span class="valor-negativo">- R$ 200,00</span>
+                <span>Aporte de Investimento</span>
+                <span class="valor-positivo">+ R$ 3.800,00</span>
             </div>
             <div class="transacao">
-                <span>Transferência Enviada</span>
-                <span class="valor-negativo">- R$ 200,00</span>
+                <span>Saldo Anterior</span>
+                <span>R$ 200,00</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Sincronizando com a última atualização da IBM Cloud
+        // Sincronizando com o saldo real da execução #24
         setTimeout(() => {
-            document.getElementById('saldo-valor').innerText = 'R$ 600,00';
-        }, 1000);
+            document.getElementById('saldo-valor').innerText = 'R$ 4.000,00';
+        }, 1200);
     </script>
 </body>
 </html>
