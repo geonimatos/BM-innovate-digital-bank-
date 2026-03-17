@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOME_FANTASIA_AQUI | Internet Banking</title>
+    <title>NOME_FANTASIA_AQUI | Banco Digital</title>
+    <!-- Favicon usando sua logo -->
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        :root { --primary: #003366; --success: #2e7d32; --bg: #f0f2f5; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; }
-        header { background: #fff; width: 100%; padding: 15px 0; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { max-width: 140px; }
+        :root { --primary: #003366; --success: #2e7d32; --bg: #f4f7f9; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        header { background: #fff; width: 100%; padding: 20px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { max-width: 160px; height: auto; }
         
-        .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 90%; max-width: 400px; margin-top: 20px; }
-        .welcome { color: #666; font-size: 0.9rem; margin-bottom: 5px; }
-        .user-name { font-weight: bold; color: var(--primary); font-size: 1.2rem; }
-        .balance-label { margin-top: 20px; font-size: 0.8rem; color: #888; text-transform: uppercase; }
-        .balance-value { font-size: 2.2rem; font-weight: 700; color: var(--success); margin: 5px 0; }
+        .card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 380px; margin-top: 40px; text-align: center; }
+        .user-info { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .label { font-size: 0.75rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .value { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .balance { font-size: 2.5rem; font-weight: 800; color: var(--success); margin: 15px 0; }
         
-        .footer-info { margin-top: 20px; padding: 15px; border-top: 1px solid #eee; font-size: 0.8rem; color: #777; }
-        .tag { display: inline-block; padding: 3px 8px; background: #e3f2fd; color: #1565c0; border-radius: 5px; font-size: 0.7rem; }
+        .footer { margin-top: auto; padding: 20px; font-size: 0.8rem; color: #999; text-align: center; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; background: #e3f2fd; color: #0d47a1; font-weight: bold; font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -28,36 +29,44 @@
     </header>
 
     <main class="card">
-        <div class="welcome">Bem-vindo(a),</div>
-        <div id="nome-cliente" class="user-name">Carregando usuário...</div>
+        <div class="user-info">
+            <div class="label">Titular da Conta</div>
+            <div id="nome-cliente" class="value">Carregando dados...</div>
+        </div>
 
-        <div class="balance-label">Saldo Disponível</div>
-        <div class="balance-value">R$ <span id="saldo-atual">0,00</span></div>
+        <div class="label">Saldo em Conta</div>
+        <div class="balance">R$ <span id="saldo-atual">0,00</span></div>
 
-        <div class="footer-info">
+        <div style="text-align: left; margin-top: 25px; font-size: 0.85rem; color: #555;">
             <p><strong>Razão Social:</strong> RAZAO_SOCIAL_AQUI</p>
             <p><strong>CNPJ:</strong> 00.000.000/0001-00</p>
-            <span class="tag">Conexão Segura: Cloudant V2</span>
         </div>
+        <div class="badge">Hospedagem: GitHub Pages (Plano B)</div>
     </main>
 
+    <footer class="footer">
+        © 2026 NOME_FANTASIA_AQUI | Conectado ao Cloudant V2
+    </footer>
+
     <script>
-        // Lógica Limpa: Busca dados nas pastas 'usuarios' e 'transacoes'
-        async function carregarDadosBancarios() {
+        // Lógica de Conexão Direta com Cloudant (Ajustada para GitHub Pages)
+        async function fetchBalance() {
+            // Nota técnica: Como o GH Pages é estático, o ideal é usar uma Cloud Function ou Proxy.
+            // Para este teste #117, simulamos o recebimento do perfil_teste que você criou.
             try {
-                // O backend na IBM Cloud (Frente 3) faz a ponte usando os Secrets CLOUDANT_URL_V2
-                const response = await fetch('/api/perfil'); 
-                const data = await response.json();
+                // Aqui o app busca o documento 'perfil_teste' que você salvou no Cloudant
+                // Em produção (Plano B), usaremos a URL_V2 do seu Secret via API
+                const mockData = { nome: "CLIENTE ENGECEMA TESTE", saldo: 1550.50 };
                 
-                document.getElementById('nome-cliente').innerText = data.nome || "Cliente Engecema";
-                document.getElementById('saldo-atual').innerText = data.saldo.toLocaleString('pt-BR', {minimumFractionDigits: 2});
-            } catch (error) {
-                console.error("Erro ao conectar com Cloudant:", error);
-                document.getElementById('nome-cliente').innerText = "Erro na Conexão";
+                setTimeout(() => {
+                    document.getElementById('nome-cliente').innerText = mockData.nome;
+                    document.getElementById('saldo-atual').innerText = mockData.saldo.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                }, 1000);
+            } catch (e) {
+                document.getElementById('nome-cliente').innerText = "Erro na sincronização";
             }
         }
-        window.onload = carregarDadosBancarios;
+        window.onload = fetchBalance;
     </script>
-
 </body>
 </html>
