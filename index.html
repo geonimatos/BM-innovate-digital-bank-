@@ -1,93 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Engecema | Digital Bank</title>
-    <link rel="icon" type="image/png" href="./logo.png">
-    <link rel="apple-touch-icon" href="./logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0a192f">
-    <style>
-        :root { --primary: #0a192f; --accent: #00d2ff; --success: #00ff88; --bg-card: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--primary); color: #fff; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; }
-        
-        /* TELAS */
-        .screen { display: none; width: 90%; max-width: 400px; flex-direction: column; align-items: center; animation: fadeIn 0.5s; }
-        .active { display: flex; }
+<script>
+    // 1. CONFIGURAÇÃO DE ACESSO (IBM CLOUD)
+    const API_BASE = 'https://api.engecema.ibmcloud.com';
 
-        /* ESTILO NUBANK DARK */
-        .logo { max-width: 120px; margin-bottom: 30px; filter: drop-shadow(0 0 10px rgba(0,210,255,0.2)); }
-        .card { background: var(--bg-card); backdrop-filter: blur(15px); width: 100%; padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); box-sizing: border-box; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        
-        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; }
-        input:focus { border-color: var(--accent); }
+    // 2. LÓGICA DE LOGIN REAL
+    async function fazerLogin() {
+        const cpf = document.getElementById('user-cpf').value.replace(/\D/g, ''); // Limpa pontos/traços
+        const pass = document.getElementById('user-pass').value;
+        const btn = document.querySelector('.btn-main');
 
-        .btn-main { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--accent); color: var(--primary); font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
-        
-        .balance-val { font-size: 2.5rem; font-weight: 800; color: var(--success); margin: 10px 0; }
-        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 25px; width: 100%; }
-        .btn-action { background: rgba(255,255,255,0.05); padding: 15px 5px; border-radius: 16px; text-align: center; font-size: 0.7rem; border: 1px solid rgba(255,255,255,0.1); font-weight: bold; cursor: pointer; }
+        if (cpf.length < 11 || pass.length < 4) {
+            alert("Por favor, preencha o CPF e a senha corretamente.");
+            return;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body>
+        // Estilo de "Carregando" (Feedback Visual Nubank)
+        btn.innerText = "Autenticando...";
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
 
-    <!-- TELA 1: LOGIN (ESTILO APP BANCÁRIO) -->
-    <div id="screen-login" class="screen active">
-        <img src="./logo.png" alt="Engecema" class="logo">
-        <div class="card">
-            <h2 style="margin-top:0; font-size: 1.2rem;">Olá! Digite seu CPF</h2>
-            <input type="text" id="user-cpf" placeholder="000.000.000-00">
-            <input type="password" id="user-pass" placeholder="Senha de 6 dígitos">
-            <button class="btn-main" onclick="fazerLogin()">Entrar no Engecema</button>
-        </div>
-        <p style="font-size: 0.7rem; color: #495670; margin-top: 20px;">Segurança garantida pela IBM Cloud</p>
-    </div>
+        try {
+            // Chamada para o seu backend na IBM Cloud
+            const response = await fetch(`${API_BASE}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cpf, senha: pass })
+            });
 
-    <!-- TELA 2: DASHBOARD (O BANCO POR DENTRO) -->
-    <div id="screen-dash" class="screen">
-        <header style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <img src="./logo.png" alt="Engecema" style="max-width: 80px;">
-            <div onclick="location.reload()" style="font-size: 0.8rem; color: var(--accent);">Sair</div>
-        </header>
-        
-        <div class="card">
-            <div style="color: #8892b0; font-size: 0.8rem; text-transform: uppercase;">Conta Corrente</div>
-            <div class="balance-val">R$ <span id="saldo">1.550,50</span></div>
-            
-            <div class="action-grid">
-                <div class="btn-action" onclick="alert('Área PIX')">PIX</div>
-                <div class="btn-action" onclick="alert('Extrato')">Extrato</div>
-                <div class="btn-action" onclick="alert('Cartões')">Cartões</div>
-            </div>
-        </div>
-
-        <footer style="margin-top: 40px; font-size: 0.6rem; color: #495670; text-align: center;">
-            ENGECEMA ENGENHARIA FOMENTO E TECNOLOGIA LTDA.<br>CNPJ: 05.368.602/0001-10
-        </footer>
-    </div>
-
-    <script>
-        // Lógica de Navegação (Simulando autenticação IBM Cloud)
-        function fazerLogin() {
-            const cpf = document.getElementById('user-cpf').value;
-            if(cpf.length >= 11) {
+            if (response.ok) {
+                const data = await response.json();
+                // Armazena o Token de Sessão (Segurança)
+                sessionStorage.setItem('token', data.token);
+                
+                // Transição de Tela
                 document.getElementById('screen-login').classList.remove('active');
                 document.getElementById('screen-dash').classList.add('active');
-                // Aqui o GitHub Action 135 já preparou o terreno para o fetch real
+                
+                // Busca o saldo real do usuário autenticado
+                getIBMBalance();
             } else {
-                alert("Por favor, insira um CPF válido.");
+                throw new Error("Credenciais Inválidas");
             }
+        } catch (error) {
+            console.error("Erro no Login:", error);
+            alert("Erro de autenticação. Verifique seus dados ou conexão com a IBM Cloud.");
+            // Fallback para teste (Remova em produção)
+            // document.getElementById('screen-login').classList.remove('active');
+            // document.getElementById('screen-dash').classList.add('active');
+        } finally {
+            btn.innerText = "Entrar no Engecema";
+            btn.style.opacity = "1";
+            btn.disabled = false;
         }
+    }
 
-        // Service Worker para ser um App Instalável
-        if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));`;
-            const blob = new Blob([swCode], {type: 'text/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(blob));
+    // 3. BUSCA DE SALDO POR TOKEN
+    async function getIBMBalance() {
+        const token = sessionStorage.getItem('token');
+        const display = document.getElementById('saldo');
+        
+        try {
+            const response = await fetch(`${API_BASE}/saldo`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            display.innerText = data.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        } catch (e) {
+            display.innerText = "1.550,50"; // Valor de demonstração
         }
-    </script>
-</body>
-</html>
+    }
+</script>
