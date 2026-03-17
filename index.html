@@ -2,32 +2,33 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Engecema | Digital Banking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engecema | Digital Bank</title>
     
-    <!-- CONFIGURAÇÕES DE APP NATIVO (ANDROID & IOS) -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a192f">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="logo.png">
+    <!-- CONFIGURAÇÕES NATIVAS PWA (ANDROID E IOS) -->
     <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a192f">
+    
+    <!-- MANIFESTO DINÂMICO INJETADO -->
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Engecema%20Bank%22,%22short_name%22:%22Engecema%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22#0a192f%22,%22theme_color%22:%22#00d2ff%22,%22icons%22:[{%22src%22:%22logo.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}]}">
 
     <style>
-        :root { --primary: #0a192f; --accent: #00d2ff; --success: #00ff88; --card: rgba(255,255,255,0.05); }
-        body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; background: var(--primary); color: #fff; display: flex; flex-direction: column; min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+        :root { --primary: #0a192f; --accent: #00d2ff; --success: #00ff88; --card: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; background: var(--primary); color: #fff; display: flex; flex-direction: column; min-height: 100vh; align-items: center; }
         
-        header { padding: 40px 20px; text-align: center; }
-        .logo { max-width: 130px; filter: drop-shadow(0 0 15px rgba(0,210,255,0.2)); }
+        header { padding: 40px 0; text-align: center; width: 100%; }
+        .logo { max-width: 140px; filter: drop-shadow(0 0 10px rgba(0,210,255,0.3)); }
 
-        .main-card { background: var(--card); backdrop-filter: blur(20px); margin: 0 20px; padding: 30px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
-        .balance-label { font-size: 0.8rem; color: #8892b0; text-transform: uppercase; letter-spacing: 1px; }
-        .balance-value { font-size: 2.5rem; font-weight: 800; color: var(--success); margin: 15px 0; }
-
-        .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
-        .btn { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 18px; text-align: center; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.1); font-weight: 600; }
+        .app-card { background: var(--card); backdrop-filter: blur(15px); width: 90%; max-width: 400px; padding: 30px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .balance-val { font-size: 2.8rem; font-weight: 800; color: var(--success); margin: 10px 0; }
         
-        .footer-legal { margin-top: auto; padding: 40px 20px; font-size: 0.75rem; color: #495670; text-align: center; line-height: 1.6; }
+        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
+        .btn { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 16px; text-align: center; font-size: 0.7rem; border: 1px solid rgba(255,255,255,0.1); font-weight: bold; }
+
+        .footer-legal { margin-top: auto; padding: 40px 20px; font-size: 0.7rem; color: #495670; text-align: center; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -36,32 +37,31 @@
         <img src="logo.png" alt="Engecema" class="logo">
     </header>
 
-    <main class="main-card">
-        <div class="balance-label">Saldo Disponível</div>
-        <div class="balance-value">R$ <span id="val-saldo">1.550,50</span></div>
+    <main class="app-card">
+        <div style="color: #8892b0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Saldo em Conta</div>
+        <div class="balance-val">R$ <span id="saldo">1.550,50</span></div>
 
-        <div class="actions">
-            <div class="btn" onclick="alert('Pix Engecema Ativo')">PIX</div>
-            <div class="btn" onclick="alert('Extrato Sincronizado')">EXTRATO</div>
-            <div class="btn" onclick="location.reload()">SAIR</div>
+        <div class="action-grid">
+            <div class="btn" onclick="alert('Pix selecionado')">PIX</div>
+            <div class="btn" onclick="alert('Extrato selecionado')">EXTRATO</div>
+            <div class="btn" onclick="location.reload()">ATUALIZAR</div>
         </div>
     </main>
 
     <footer class="footer-legal">
         <strong>ENGECEMA ENGENHARIA FOMENTO E TECNOLOGIA LTDA.</strong><br>
         CNPJ: 05.368.602/0001-10<br>
-        Rua Jose de Moraes Rego, 1299, Centro<br>
-        Campinas do Piaui - PI | © 2026 Engecema Bank
+        Rua Jose de Moraes Rego, 1299, Centro, Campinas do Piauí - PI<br><br>
+        © 2026 Engecema Bank | App Instalável Android & iOS
     </footer>
 
     <script>
-        // REGISTRO DO SERVICE WORKER (PARA INSTALAÇÃO ANDROID/IOS)
+        // SERVICE WORKER INJETADO (MOTOR DO APP)
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            const swCode = `self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));`;
+            const blob = new Blob([swCode], {type: 'text/javascript'});
+            navigator.serviceWorker.register(URL.createObjectURL(blob));
         }
-        
-        // LÓGICA DE INTERATIVIDADE
-        console.log("Engecema Mobile App Ready - Action #127");
     </script>
 </body>
 </html>
