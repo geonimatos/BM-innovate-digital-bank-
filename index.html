@@ -1,74 +1,74 @@
+<!-- Substituição Total para a #121 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOME_FANTASIA_AQUI | Bank</title>
+    <title>NOME_FANTASIA_AQUI | Transações</title>
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        :root { --primary: #0a192f; --accent: #00d2ff; --success: #00ff88; --card: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--primary); color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
+        :root { --primary: #0a192f; --accent: #00d2ff; --success: #00ff88; --danger: #ff4d4d; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--primary); color: #fff; text-align: center; }
         
-        /* Overlay de Login (Ação B) */
-        #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; }
-        .btn-login { background: var(--accent); color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; border: none; cursor: pointer; }
+        .main-container { padding: 20px; max-width: 400px; margin: 0 auto; }
+        .card { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
+        .balance { font-size: 2.5rem; font-weight: 800; color: var(--success); }
 
-        /* Área Logada (Ação A) */
-        #app-content { display: none; padding: 20px; }
-        header { text-align: center; padding: 20px 0; }
-        .logo { max-width: 130px; }
+        /* Modal de Pix (Ação A) */
+        #pix-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; padding: 40px 20px; }
+        .input-pix { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #112240; color: #fff; margin-bottom: 20px; box-sizing: border-box; }
+        .btn-confirm { background: var(--success); color: #000; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; border: none; }
         
-        .main-card { background: var(--card); backdrop-filter: blur(15px); padding: 25px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
-        .balance-value { font-size: 2.5rem; font-weight: 800; color: var(--success); margin: 10px 0; }
-
-        .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 25px; }
-        .btn-action { background: rgba(255,255,255,0.07); padding: 15px; border-radius: 16px; text-align: center; font-size: 0.7rem; border: 1px solid rgba(255,255,255,0.1); }
-        
-        .footer { margin-top: auto; padding: 30px; font-size: 0.7rem; color: #495670; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
+        .btn-opt { background: #112240; padding: 15px; border-radius: 16px; font-size: 0.7rem; border: 1px solid #233554; }
     </style>
 </head>
 <body>
 
-    <!-- TELA DE LOGIN (AÇÃO B) -->
-    <div id="login-screen">
-        <img src="logo.png" alt="Logo" class="logo" style="margin-bottom: 50px;">
-        <button class="btn-login" onclick="realizarLogin()">ENTRAR NO BANCO</button>
-        <p style="font-size: 0.7rem; color: #495670; margin-top: 20px;">Segurança IBM App ID Ativa</p>
-    </div>
-
-    <!-- ÁREA DO CLIENTE (AÇÃO A) -->
-    <div id="app-content">
-        <header><img src="logo.png" alt="Logo" class="logo"></header>
+    <div class="main-container">
+        <header style="padding: 30px 0;"><img src="logo.png" alt="Logo" style="max-width: 120px;"></header>
         
-        <main class="main-card">
-            <div style="color: #8892b0; font-size: 0.8rem;">Saldo Total</div>
-            <div class="balance-value">R$ <span id="saldo-atual">1.550,50</span></div>
+        <main class="card">
+            <div style="color: #8892b0; font-size: 0.8rem;">Saldo Disponível</div>
+            <div class="balance">R$ <span id="saldo">1.550,50</span></div>
 
-            <div class="actions-grid">
-                <div class="btn-action" onclick="alert('Área Pix em breve')">PIX</div>
-                <div class="btn-action" onclick="alert('Extrato em breve')">EXTRATO</div>
-                <div class="btn-action" onclick="alert('Cartões em breve')">CARTÕES</div>
+            <div class="grid">
+                <div class="btn-opt" onclick="abrirPix()">PIX</div>
+                <div class="btn-opt" onclick="alert('Extrato: - R$ 50,00 (Mercado)')">EXTRATO</div>
+                <div class="btn-opt" onclick="location.reload()">SAIR</div>
             </div>
         </main>
 
-        <div class="footer">
+        <div style="margin-top: 50px; font-size: 0.7rem; color: #495670;">
             <strong>RAZAO_SOCIAL_AQUI</strong><br>
-            CNPJ: 00.000.000/0001-00<br>
-            © 2026 NOME_FANTASIA_AQUI - Action #120
+            CNPJ: 00.000.000/0001-00 | Action #121
         </div>
     </div>
 
-    <script>
-        // LÓGICA DE LOGIN (AÇÃO B)
-        function realizarLogin() {
-            // Simulando a autenticação do App ID configurado na Frente 1
-            // Após o login, escondemos a tela de entrada e mostramos o saldo
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-        }
+    <!-- MODAL PIX -->
+    <div id="pix-modal">
+        <h2 style="color: var(--accent);">Transferência Pix</h2>
+        <input type="text" class="input-pix" placeholder="Chave Pix (E-mail, CPF ou Celular)">
+        <input type="number" id="valor-pix" class="input-pix" placeholder="Valor R$">
+        <button class="btn-confirm" onclick="confirmarPix()">CONFIRMAR ENVIO</button>
+        <p onclick="document.getElementById('pix-modal').style.display='none'" style="margin-top: 20px; color: var(--danger); cursor: pointer;">Cancelar</p>
+    </div>
 
-        // LÓGICA DE DADOS (AÇÃO A)
-        // Aqui o app buscará na pasta 'transacoes' do Cloudant V2
+    <script>
+        function abrirPix() { document.getElementById('pix-modal').style.display = 'block'; }
+        
+        function confirmarPix() {
+            const valor = document.getElementById('valor-pix').value;
+            if(!valor || valor <= 0) return alert("Insira um valor válido");
+            
+            let saldoAtual = 1550.50;
+            let novoSaldo = saldoAtual - parseFloat(valor);
+            
+            // Simulação de escrita na pasta 'transacoes' do Cloudant
+            alert("Pix de R$ " + valor + " enviado com sucesso!");
+            document.getElementById('saldo').innerText = novoSaldo.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            document.getElementById('pix-modal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
