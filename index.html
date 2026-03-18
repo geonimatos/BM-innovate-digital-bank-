@@ -75,15 +75,12 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO ENGECEMA - CREDENCIAIS REAIS DO PAINEL
+        // CONFIGURAÇÃO CENTRALIZADA
         const EMAILJS_CONFIG = {
             PUBLIC_KEY: "MrcSBFoZP4w8KVROL",
             SERVICE_ID: "service_94e4v3d",
             TEMPLATE_ID: "template_mcb6vad"
         };
-
-        // Inicialização obrigatória
-        (function() { emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); })();
 
         let tokenGerado = "";
 
@@ -117,17 +114,22 @@
                 token: tokenGerado
             };
 
-            emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams)
-                .then(() => {
-                    alert("E-mail disparado com sucesso via ENGECEMA!");
-                    document.getElementById('msg-boas-vindas').textContent = "Olá, " + nome;
-                    mudarTela('screen-token');
-                }, (error) => {
-                    console.error("Erro:", error);
-                    alert("Falha no envio. Verifique se o e-mail de teste do painel EmailJS chegou.");
-                    btn.disabled = false;
-                    btn.innerText = "Tentar novamente";
-                });
+            // DISPARO COM VALIDAÇÃO DIRETA PARA EVITAR TRAVA DE DOMÍNIO
+            emailjs.send(
+                EMAILJS_CONFIG.SERVICE_ID, 
+                EMAILJS_CONFIG.TEMPLATE_ID, 
+                templateParams, 
+                EMAILJS_CONFIG.PUBLIC_KEY
+            ).then(() => {
+                alert("E-mail disparado com sucesso via ENGECEMA!");
+                document.getElementById('msg-boas-vindas').textContent = "Olá, " + nome;
+                mudarTela('screen-token');
+            }, (error) => {
+                console.error("Erro técnico:", error);
+                alert("Falha no envio. Verifique o Spam ou tente novamente.");
+                btn.disabled = false;
+                btn.innerText = "Tentar novamente";
+            });
         }
 
         function validarTokenFinal() {
