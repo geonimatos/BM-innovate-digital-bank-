@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENGECEMA</title>
-    <!-- Biblioteca Oficial de E-mail -->
+    <!-- Biblioteca de E-mail Oficial -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
     <style>
         :root { --emerald: #2ecc71; --dark: #27ae60; --bg: #f4f7f6; --text: #2d3436; }
@@ -75,12 +75,15 @@
     </div>
 
     <script>
-        // INICIALIZAÇÃO - CHAVE PÚBLICA REAL
-        (function() { emailjs.init("MrcSBFoZP4w8KVROL"); })();
+        // CONFIGURAÇÃO ENGECEMA - CREDENCIAIS REAIS DO PAINEL
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: "MrcSBFoZP4w8KVROL",
+            SERVICE_ID: "service_94e4v3d",
+            TEMPLATE_ID: "template_mcb6vad"
+        };
 
-        // IDs ATUALIZADOS CONFORME SEU E-MAIL DE TESTE
-        const EMAILJS_SERVICE = "service_94e4v3d"; 
-        const EMAILJS_TEMPLATE = "template_mcb6vad";
+        // Inicialização obrigatória
+        (function() { emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); })();
 
         let tokenGerado = "";
 
@@ -114,14 +117,14 @@
                 token: tokenGerado
             };
 
-            emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams)
+            emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams)
                 .then(() => {
                     alert("E-mail disparado com sucesso via ENGECEMA!");
                     document.getElementById('msg-boas-vindas').textContent = "Olá, " + nome;
                     mudarTela('screen-token');
                 }, (error) => {
                     console.error("Erro:", error);
-                    alert("Falha técnica. Verifique se o Template ID no EmailJS está correto.");
+                    alert("Falha no envio. Verifique se o e-mail de teste do painel EmailJS chegou.");
                     btn.disabled = false;
                     btn.innerText = "Tentar novamente";
                 });
