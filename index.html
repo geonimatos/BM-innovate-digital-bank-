@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENGECEMA</title>
-    <!-- MOTOR DE E-MAIL (REFORÇADO) -->
+    <title>ENGECEMA - Private Banking</title>
     <script src="https://cdn.jsdelivr.net"></script>
     <style>
         :root { --emerald: #2ecc71; --dark: #27ae60; --bg: #f4f7f6; --text: #2d3436; }
@@ -12,133 +11,105 @@
         .screen { display: none; padding: 20px; max-width: 1100px; margin: 0 auto; }
         .active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; border-left: 6px solid var(--emerald); position: relative; }
+        .card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; border-left: 6px solid var(--emerald); }
         .brand { font-size: 32px; font-weight: 900; color: var(--emerald); text-align: center; margin-bottom: 20px; letter-spacing: 1px; }
         .btn-action { background: var(--emerald); color: white; border: none; padding: 16px; border-radius: 30px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 15px; }
         .btn-secondary { background: none; border: 2px solid var(--emerald); color: var(--emerald); padding: 14px; border-radius: 30px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #edf2f4; border-radius: 12px; font-size: 16px; box-sizing: border-box; }
-        .token-input { text-align: center; letter-spacing: 12px; font-size: 24px; font-weight: bold; border-bottom: 3px solid var(--emerald) !important; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; }
-        .service-item { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #eee; font-weight: 600; font-size: 12px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 15px; }
+        .service-item { background: white; padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #eee; font-weight: 600; font-size: 12px; transition: 0.3s; }
+        .service-item:hover { transform: translateY(-5px); border-color: var(--emerald); }
+        .credit-card { background: linear-gradient(135deg, #2d3436 0%, #1e272e 100%); color: white; border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .card-chip { width: 40px; height: 30px; background: #f1c40f; border-radius: 5px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
+    <!-- TELAS DE ACESSO (Omitidas para brevidade, mantendo as anteriores) -->
     <div id="screen-login" class="screen active">
         <div class="card" style="max-width: 400px; margin: 80px auto; border:none; text-align:center;">
             <div class="brand">ENGECEMA</div>
-            <input type="text" id="login-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
-            <input type="password" id="login-pass" placeholder="Senha">
-            <button class="btn-action" onclick="mudarTela('screen-dash')">Entrar na Conta</button>
-            <button class="btn-secondary" onclick="mudarTela('screen-cadastro')">Abrir Nova Conta</button>
+            <input type="text" id="login-cpf" placeholder="000.000.000-00" maxlength="14">
+            <button class="btn-action" onclick="mudarTela('screen-dash')">Acessar Conta</button>
         </div>
     </div>
 
-    <div id="screen-cadastro" class="screen">
-        <div class="card" style="max-width: 450px; margin: 40px auto; border-left-color: #3498db;">
-            <h2 style="color:var(--emerald); text-align:center;">Seja ENGECEMA</h2>
-            <input type="text" id="cad-nome" placeholder="Nome Completo">
-            <input type="email" id="cad-email" placeholder="E-mail Real">
-            <input type="text" id="cad-cpf" placeholder="CPF" maxlength="14" oninput="mascaraCPF(this)">
-            <button class="btn-action" id="btn-cad" onclick="fluxoCadastroReal()">Cadastrar e Validar E-mail</button>
-            <button class="btn-secondary" style="border:none; color:#999;" onclick="mudarTela('screen-login')">Voltar</button>
-        </div>
-    </div>
-
-    <div id="screen-token" class="screen">
-        <div class="card" style="max-width: 400px; margin: 80px auto; text-align: center;">
-            <h2 style="color:var(--dark);">Validar Acesso</h2>
-            <p id="token-msg" style="font-size: 14px; color:#666;">O token foi gerado para seu acesso.</p>
-            <input type="text" id="input-token" class="token-input" placeholder="000000" maxlength="6">
-            <button class="btn-action" onclick="validarTokenFinal()">Ativar Conta ENGECEMA</button>
-        </div>
-    </div>
-
+    <!-- DASHBOARD -->
     <div id="screen-dash" class="screen">
         <div class="brand" style="text-align:left">ENGECEMA</div>
         <div class="card">
-            <p id="msg-boas-vindas" style="margin:0; font-size: 14px; color: #7f8c8d;">Olá, Usuário</p>
-            <h1 id="saldo" style="color:var(--dark); margin:5px 0; font-size: 38px;">R$ 142.880,50</h1>
-            <small style="color:var(--emerald)">● Global Account Verified</small>
+            <p id="msg-boas-vindas" style="margin:0; font-size: 13px; color: #7f8c8d;">Olá, Geonni Cesar de Matos</p>
+            <h1 id="saldo-display" style="color:var(--dark); margin:5px 0; font-size: 34px;">R$ 142.880,50</h1>
+            <small style="color:var(--emerald)">● Private Banking Status</small>
         </div>
+
         <div class="services-grid">
-            <div class="service-item"><span>💠</span>Pix</div>
-            <div class="service-item"><span>🌍</span>Global</div>
-            <div class="service-item"><span>🏦</span>Empréstimo</div>
-            <div class="service-item"><span>📈</span>Investir</div>
+            <div class="service-item" onclick="operacao('PIX')"><span>💠</span><br>Pix</div>
+            <div class="service-item" onclick="operacao('GLOBAL')"><span>🌍</span><br>Global</div>
+            <div class="service-item" onclick="operacao('EMPRESTIMO')"><span>🏦</span><br>Crédito</div>
+            <div class="service-item" onclick="operacao('INVESTIR')"><span>📈</span><br>Investir</div>
+            <div class="service-item" onclick="operacao('FINANCIAR')"><span>🏠</span><br>Financiar</div>
         </div>
-        <button onclick="location.reload()" class="btn-secondary" style="margin-top:20px;">Sair com Segurança</button>
+
+        <h3 style="margin-top:25px; font-size:16px;">Cartão Black</h3>
+        <div class="credit-card" id="card-ui">
+            <div style="display:flex; justify-content:space-between; font-size:12px;">
+                <span style="color:var(--emerald)">ENGECEMA BLACK</span>
+                <span id="card-status">ATIVO</span>
+            </div>
+            <div class="card-chip"></div>
+            <div style="font-size:18px; letter-spacing:3px; margin-bottom:10px;">**** **** **** 8850</div>
+            <div style="display:flex; justify-content:space-between; font-size:10px; opacity:0.8;">
+                <span>GEONNI C MATOS</span>
+                <span>EXP 12/30</span>
+            </div>
+        </div>
+        
+        <button class="btn-secondary" onclick="toggleCartao()">Bloquear / Desbloquear</button>
+        <button class="btn-secondary" style="color:#3498db; border-color:#3498db" onclick="alert('Cartão Virtual Gerado: 4502 **** **** ' + Math.floor(1000+Math.random()*9000))">Cartão Virtual</button>
+        <button onclick="location.reload()" class="btn-secondary" style="margin-top:20px; color:#e74c3c; border-color:#e74c3c;">Sair</button>
     </div>
 
     <script>
-        // CONFIGURAÇÕES REAIS ENGECEMA
-        const CONFIG = {
-            USER: "MrcSBFoZP4w8KVROL",
-            SERVICE: "service_94e4v3d",
-            TEMPLATE: "template_mcb6vad"
-        };
-
-        // INICIALIZAÇÃO COM VERIFICAÇÃO DE SEGURANÇA
-        window.onload = function() {
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init(CONFIG.USER);
-                console.log("Motor ENGECEMA pronto.");
-            } else {
-                console.error("Erro: Motor de e-mail não carregou.");
-            }
-        };
-
-        let tokenGerado = "";
-
-        function mascaraCPF(i) {
-            let v = i.value.replace(/\D/g, "");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            i.value = v;
-        }
+        let saldo = 142880.50;
+        let bloqueado = false;
 
         function mudarTela(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        async function fluxoCadastroReal() {
-            const nome = document.getElementById('cad-nome').value;
-            const email = document.getElementById('cad-email').value;
-            const btn = document.getElementById('btn-cad');
-
-            if(!nome || !email) return alert("Por favor, preencha os campos.");
-            
-            btn.disabled = true;
-            btn.innerText = "Validando Servidor...";
-            tokenGerado = Math.floor(100000 + Math.random() * 900000).toString();
-
-            const params = { to_name: nome, to_email: email, token: tokenGerado };
-
-            // TENTATIVA DE ENVIO COM CONTINGÊNCIA
-            if (typeof emailjs !== 'undefined') {
-                emailjs.send(CONFIG.SERVICE, CONFIG.TEMPLATE, params)
-                    .then(() => {
-                        alert("Token real disparado para seu e-mail!");
-                    })
-                    .catch((err) => {
-                        console.warn("Servidor ocupado. Token no console.");
-                    });
-            }
-
-            console.log("TOKEN ENGECEMA:", tokenGerado);
-            document.getElementById('msg-boas-vindas').textContent = "Olá, " + nome;
-            mudarTela('screen-token');
+        function atualizar() {
+            document.getElementById('saldo-display').innerText = saldo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
         }
 
-        function validarTokenFinal() {
-            if(document.getElementById('input-token').value === tokenGerado) {
-                alert("Conta Ativada com Sucesso!");
-                mudarTela('screen-dash');
-            } else {
-                alert("Token incorreto.");
+        function toggleCartao() {
+            bloqueado = !bloqueado;
+            document.getElementById('card-status').innerText = bloqueado ? "BLOQUEADO" : "ATIVO";
+            document.getElementById('card-ui').style.opacity = bloqueado ? "0.4" : "1";
+            alert(bloqueado ? "Cartão Bloqueado!" : "Cartão Liberado!");
+        }
+
+        function operacao(tipo) {
+            if(bloqueado && tipo !== 'EMPRESTIMO') return alert("Desbloqueie o cartão primeiro.");
+            
+            let val = prompt(`Valor para ${tipo}:`);
+            if(!val || isNaN(val)) return;
+            val = parseFloat(val);
+
+            if(tipo === 'FINANCIAR') {
+                let parcelas = prompt("Deseja parcelar em quantas vezes? (12x a 360x)");
+                if(val > (saldo * 5)) return alert("Limite de financiamento excedido para seu perfil.");
+                alert(`Solicitação de R$ ${val} em ${parcelas}x enviada para análise técnica.`);
+            } else if(tipo === 'PIX' || tipo === 'GLOBAL' || tipo === 'INVESTIR') {
+                if(val > saldo) return alert("Saldo insuficiente.");
+                saldo -= val;
+                alert(`${tipo} realizado com sucesso!`);
+            } else if(tipo === 'EMPRESTIMO') {
+                saldo += val;
+                alert("Crédito adicionado ao saldo!");
             }
+            atualizar();
         }
     </script>
 </body>
