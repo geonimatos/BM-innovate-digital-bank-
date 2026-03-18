@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENGECEMA</title>
-    <!-- Biblioteca de E-mail Integrada -->
+    <!-- Biblioteca Oficial de E-mail -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net"></script>
     <style>
         :root { --emerald: #2ecc71; --dark: #27ae60; --bg: #f4f7f6; --text: #2d3436; }
@@ -42,7 +42,7 @@
             <input type="text" id="cad-nome" placeholder="Nome Completo">
             <input type="email" id="cad-email" placeholder="E-mail Real">
             <input type="text" id="cad-cpf" placeholder="CPF" maxlength="14" oninput="mascaraCPF(this)">
-            <button class="btn-action" id="btn-cad" onclick="enviarTokenEngecema()">Cadastrar e Validar E-mail</button>
+            <button class="btn-action" id="btn-cad" onclick="fluxoCadastroReal()">Cadastrar e Validar E-mail</button>
             <button class="btn-secondary" style="border:none; color:#999;" onclick="mudarTela('screen-login')">Voltar</button>
         </div>
     </div>
@@ -75,10 +75,14 @@
     </div>
 
     <script>
-        // INICIALIZAÇÃO COM SUA CHAVE PÚBLICA REAL
+        // INICIALIZAÇÃO - CHAVE PÚBLICA REAL
         (function() { emailjs.init("MrcSBFoZP4w8KVROL"); })();
 
-        let tokenAtual = "";
+        // IDs ATUALIZADOS CONFORME SEU E-MAIL DE TESTE
+        const EMAILJS_SERVICE = "service_94e4v3d"; 
+        const EMAILJS_TEMPLATE = "template_mcb6vad";
+
+        let tokenGerado = "";
 
         function mascaraCPF(i) {
             let v = i.value.replace(/\D/g, "");
@@ -93,43 +97,42 @@
             document.getElementById(id).classList.add('active');
         }
 
-        async function enviarTokenEngecema() {
+        async function fluxoCadastroReal() {
             const nome = document.getElementById('cad-nome').value;
             const email = document.getElementById('cad-email').value;
             const btn = document.getElementById('btn-cad');
 
-            if(!nome || !email) return alert("Preencha todos os campos.");
+            if(!nome || !email) return alert("Por favor, preencha todos os campos.");
             
             btn.disabled = true;
             btn.innerText = "Enviando Token Real...";
-            tokenAtual = Math.floor(100000 + Math.random() * 900000).toString();
+            tokenGerado = Math.floor(100000 + Math.random() * 900000).toString();
 
-            const params = {
+            const templateParams = {
                 to_name: nome,
                 to_email: email,
-                token: tokenAtual
+                token: tokenGerado
             };
 
-            // USANDO SEUS IDs DE SERVIÇO E TEMPLATE REAIS
-            emailjs.send("service_50l6y0d", "template_mcb6vad", params)
+            emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams)
                 .then(() => {
-                    alert("E-mail real disparado com sucesso!");
+                    alert("E-mail disparado com sucesso via ENGECEMA!");
                     document.getElementById('msg-boas-vindas').textContent = "Olá, " + nome;
                     mudarTela('screen-token');
                 }, (error) => {
                     console.error("Erro:", error);
-                    alert("Falha no envio. Verifique os IDs no EmailJS.");
+                    alert("Falha técnica. Verifique se o Template ID no EmailJS está correto.");
                     btn.disabled = false;
                     btn.innerText = "Tentar novamente";
                 });
         }
 
         function validarTokenFinal() {
-            if(document.getElementById('input-token').value === tokenAtual) {
+            if(document.getElementById('input-token').value === tokenGerado) {
                 alert("Conta Ativada com Sucesso!");
                 mudarTela('screen-dash');
             } else {
-                alert("Token incorreto. Verifique o e-mail.");
+                alert("Token incorreto. Verifique seu e-mail.");
             }
         }
     </script>
