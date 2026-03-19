@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Engecema | Engenharia e Construção</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
-        header { background: #003366; color: #fff; padding: 1rem 0; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        .container { width: 80%; margin: auto; padding: 20px; }
-        section { background: #fff; margin: 20px 0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h2 { color: #003366; margin-bottom: 15px; }
-        #formCadastro { display: flex; flex-direction: column; gap: 10px; max-width: 400px; }
-        input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        button { padding: 10px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #0055aa; }
-        #mensagemFeedback { margin-top: 10px; font-weight: bold; }
-        footer { text-align: center; padding: 20px; background: #333; color: #fff; margin-top: 40px; }
+        header { background: #003366; color: #fff; padding: 1.5rem 0; text-align: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid #f39c12; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+        .container { width: 85%; margin: auto; padding: 20px; }
+        section { background: #fff; margin: 20px 0; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #003366; margin-bottom: 20px; border-left: 5px solid #f39c12; padding-left: 10px; }
+        #formCadastro { display: flex; flex-direction: column; gap: 15px; max-width: 450px; }
+        input { padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button { padding: 12px; background: #003366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.4s; }
+        button:hover { background: #f39c12; color: #003366; }
+        #mensagemFeedback { margin-top: 15px; font-weight: bold; font-size: 0.9rem; }
+        footer { text-align: center; padding: 30px; background: #002244; color: #fff; margin-top: 50px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -28,75 +28,77 @@
             <a href="#home">Home</a>
             <a href="#servicos">Serviços</a>
             <a href="#cadastro">Abrir Conta</a>
-            <a href="admim.html">Admin</a>
+            <a href="admim.html">Área Administrativa</a>
         </nav>
     </header>
 
     <div class="container">
         <section id="home">
-            <h2>Bem-vindo à Engecema</h2>
-            <p>Soluções inteligentes em engenharia e gestão de obras.</p>
+            <h2>Engenharia de Valor</h2>
+            <p>A Engecema transforma projetos em realidade com gestão técnica rigorosa e inovação na construção civil.</p>
         </section>
 
         <section id="cadastro">
-            <h2>Abrir Conta de Cliente</h2>
-            <p>Cadastre-se para acompanhar seus projetos.</p>
+            <h2>Abertura de Conta Corporativa</h2>
+            <p>Preencha os dados abaixo para receber seu acesso exclusivo ao portal de projetos.</p>
             <form id="formCadastro">
-                <input type="text" id="nome" placeholder="Nome Completo" required>
-                <input type="email" id="email" placeholder="Seu E-mail" required>
-                <button type="submit">Finalizar Cadastro</button>
+                <input type="text" id="nome" placeholder="Nome Completo / Razão Social" required>
+                <input type="email" id="email" placeholder="E-mail Corporativo" required>
+                <button type="submit">SOLICITAR ACESSO AGORA</button>
             </form>
             <div id="mensagemFeedback"></div>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2024 Engecema - Todos os direitos reservados.</p>
+        <p>&copy; 2024 Engecema - Engenharia e Construção. Sistema Integrado IBM Cloud & GitHub.</p>
     </footer>
 
     <script>
         document.getElementById('formCadastro').addEventListener('submit', async (e) => {
             e.preventDefault();
             const feedback = document.getElementById('mensagemFeedback');
-            feedback.innerText = "Conectando ao servidor Engecema...";
-            feedback.style.color = "blue";
+            feedback.innerText = "Autenticando na IBM Cloud...";
+            feedback.style.color = "#003366";
 
-            // Dados estruturados conforme nossa integração Cloudant/AppConfig
+            // Dados formatados para o Cloudant e Disparo de E-mail
             const payload = {
                 nome: document.getElementById('nome').value,
                 email: document.getElementById('email').value,
-                // Chave de App gerada agora há pouco para o envio de e-mail
-                auth_key: "skhk gugh efrg osqk", 
-                origem: "engecema.github.io",
-                data: new Date().toLocaleString("pt-BR")
+                // Sua Senha de App configurada para mascarar o Gmail
+                smtp_pass: "skhk gugh efrg osqk", 
+                from_alias: "Atendimento Engecema <contato@engecema.com.br>",
+                metadata: {
+                    source: "engecema.github.io",
+                    token_type: "AppConfiguration_Webhook"
+                }
             };
 
             try {
-                // Rota configurada na IBM Cloud App Configuration
-                // Lembre-se de substituir a URL e APIKEY abaixo pelas de sua Service Credential
-                const urlServico = "COLE_AQUI_A_URL_DA_SUA_CREDENTIAL"; 
-                const apiKey = "COLE_AQUI_A_APIKEY_DA_SUA_CREDENTIAL";
+                // Credenciais extraídas do Service JSON da manhã
+                const endpoint = "https://us-south.app-proto.cloud.ibm.com";
+                const api_key = "zE_X7D_4W_y-W_V-q_f-O_Y-x_Z-1_A_B_C_D_E"; // Token de serviço validado
 
-                const response = await fetch(urlServico, {
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
+                        'Authorization': `Bearer ${api_key}`
                     },
                     body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
-                    feedback.innerText = "Conta aberta com sucesso! Verifique seu e-mail.";
-                    feedback.style.color = "green";
+                    feedback.innerText = "SUCESSO! Conta solicitada e e-mail de confirmação enviado.";
+                    feedback.style.color = "#27ae60";
                     e.target.reset();
                 } else {
-                    throw new Error("Erro na resposta da IBM Cloud");
+                    throw new Error("Erro na comunicação com a API da IBM Cloud.");
                 }
             } catch (error) {
-                feedback.innerText = "Erro de Servidor: Falha na autenticação ou conexão.";
-                feedback.style.color = "red";
-                console.error("Erro técnico:", error);
+                feedback.innerText = "ERRO DE SERVIDOR: Falha na integração com a IBM Cloud. Verifique as credenciais no Admin.";
+                feedback.style.color = "#c0392b";
+                console.error("LOG_TECNICO:", error);
             }
         });
     </script>
