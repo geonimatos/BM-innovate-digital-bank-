@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Engecema Private - Cadastro</title>
-    <!-- FAVICON: Ajustado para o domínio do GitHub Pages -->
-    <link rel="icon" href="https://engecema.github.io" type="image/x-icon">
-    <link rel="shortcut icon" href="https://engecema.github.io" type="image/x-icon">
+    <!-- FAVICON: Forçando o carregamento relativo e absoluto -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <style>
         body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 40px; background-color: #f0f2f5; }
         form { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { color: #0f62fe; text-align: center; margin-bottom: 20px; font-size: 24px; }
+        h2 { color: #da1e28; text-align: center; margin-bottom: 20px; font-size: 24px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px; }
         input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .erro-senha { color: #da1e28; font-size: 12px; display: none; margin-bottom: 10px; font-weight: bold; }
-        button { width: 100%; padding: 14px; background-color: #0f62fe; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        button:hover { background-color: #0353e9; }
+        /* BOTÃO VERMELHO CONFORME PADRÃO DA PRIMEIRA PÁGINA */
+        button { width: 100%; padding: 14px; background-color: #da1e28; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        button:hover { background-color: #b91922; }
     </style>
 </head>
 <body>
@@ -43,36 +44,37 @@
 </form>
 
 <script>
-document.getElementById('formCadastro').addEventListener('submit', async (e) => {
+document.getElementById('formCadastro').onsubmit = async function(e) {
     e.preventDefault();
     
     const senha = document.getElementById('senha').value;
     const confirma = document.getElementById('confirmar_senha').value;
     const msgErro = document.getElementById('msgErro');
 
+    // Validação de senha
     if (senha !== confirma) {
         msgErro.style.display = 'block';
         return;
     }
     msgErro.style.display = 'none';
 
-    // CONFIGURAÇÕES IBM (G4mi3u... API KEY MANAGER)
+    // CONFIGURAÇÕES IBM
     const API_KEY = "G4mi3uBOjSMFifAA1Bhj6O7rEbZ5FBNyeJG7YH9fxg_n";
     const URL_CL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud";
     const DB = "cliente_engecema";
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(this);
     const dados = Object.fromEntries(formData.entries());
     delete dados.confirmar_senha;
     dados.tipo_conta = "Private";
     dados.criado_em = new Date().toISOString();
 
     try {
-        // Ajuste para autenticação IAM que o Cloudant exige
         const auth = btoa("apikey:" + API_KEY.trim());
 
         const response = await fetch(`${URL_CL}/${DB}`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': 'Basic ' + auth,
                 'Content-Type': 'application/json'
@@ -82,16 +84,14 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
 
         if (response.ok) {
             alert("Sucesso! Cadastro Engecema Private realizado.");
-            e.target.reset();
+            this.reset();
         } else {
-            const erroData = await response.json();
-            console.error(erroData);
-            alert("Erro 401: A IBM recusou o acesso. Verifique se o CORS está em 'Allow all domains (*)' no painel Cloudant.");
+            alert("Erro 401: Verifique o CORS no painel da IBM.");
         }
     } catch (error) {
-        alert("Erro de Rede: O navegador bloqueou a conexão. Verifique o CORS na IBM.");
+        alert("Erro de Rede: O navegador bloqueou a conexão.");
     }
-});
+};
 </script>
 
 </body>
