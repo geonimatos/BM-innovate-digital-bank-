@@ -6,7 +6,7 @@
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f4f4f4; }
         form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { margin-top: 0; color: #0f62fe; font-size: 22px; }
+        h2 { margin-top: 0; color: #0f62fe; font-size: 22px; text-align: center; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
         input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
         button { width: 100%; padding: 12px; background-color: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 16px; }
@@ -31,20 +31,21 @@
 document.getElementById('meuFormulario').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // 1. CONFIGURAÇÕES ATUALIZADAS
+    // 1. CONFIGURAÇÕES TÉCNICAS (CHAVE MANAGER)
     const API_KEY = "rRF04_HoeaJcx5A8j2MRGFUnc-yhgTkZEtYFCaO2KlHa"; 
-    const CLOUDANT_URL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud";
+    // Usando o External Endpoint Direto para evitar erros de rota
+    const CLOUDANT_URL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudant.com";
     const DB_NAME = "cliente_engecema";
 
-    // 2. CAPTURA DOS DADOS
+    // 2. CAPTURA E PREPARAÇÃO DOS DADOS
     const formData = new FormData(e.target);
     const dados = Object.fromEntries(formData.entries());
     dados.criado_em = new Date().toISOString();
-    dados.tipo_conta = "Private";
+    dados.origem = "GitHub Pages";
 
     try {
-        // Autenticação Basic para IBM Cloudant usando a nova API KEY
-        const auth = btoa("apikey:" + API_KEY.trim()); 
+        // AJUSTE CRÍTICO: Usando 'iamapikey' para autenticação IAM da IBM
+        const auth = btoa("iamapikey:" + API_KEY.trim()); 
 
         const response = await fetch(`${CLOUDANT_URL}/${DB_NAME}`, {
             method: 'POST',
@@ -62,11 +63,11 @@ document.getElementById('meuFormulario').addEventListener('submit', async (e) =>
         } else {
             const erroData = await response.json();
             console.error("Erro IBM:", erroData);
-            alert("Erro no servidor IBM: " + (erroData.reason || "Verifique as permissões da chave."));
+            alert("Erro 401: A IBM não reconheceu a chave. Verifique se ela ainda está ativa no painel.");
         }
     } catch (error) {
-        console.error("Erro de Conexão:", error);
-        alert("Falha de conexão. Verifique se o CORS está ativo no painel da IBM.");
+        console.error("Erro de Rede:", error);
+        alert("Falha de conexão. Verifique se o CORS está em 'Allow all domains (*)' no Cloudant.");
     }
 });
 </script>
