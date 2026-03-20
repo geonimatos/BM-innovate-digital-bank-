@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta title="Cadastro - Engecema Private">
+    <title>Cadastro - Engecema Private</title>
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f4f4f4; }
         form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
@@ -23,7 +23,7 @@
 document.getElementById('meuFormulario').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // CONFIGURAÇÕES FIXAS
+    // CONFIGURAÇÕES FIXAS - Use a URL Preferred sem espaços
     const API_KEY = "2iYmkEX16F2bd9aeE_8_JnSeWjabD8RMmKKeiCCJF918"; 
     const CLOUDANT_URL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud";
     const DB_NAME = "cliente_engecema";
@@ -48,7 +48,7 @@ document.getElementById('meuFormulario').addEventListener('submit', async (e) =>
         } else {
             const erroData = await response.json();
             console.error("Erro IBM:", erroData);
-            alert("Erro 401: Verifique se a chave no painel IBM é MANAGER.");
+            alert("Erro 401: A API KEY não tem permissão de MANAGER.");
         }
     } catch (error) {
         console.error("Erro de Rede:", error);
