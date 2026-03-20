@@ -6,101 +6,44 @@
     <link rel="icon" type="image/png" href="logo.png">
     <title>Engecema | Fomento Mercantil e Tecnologia</title>
     <style>
-        /* LAYOUT BANCÁRIO REFINADO */
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f4f7f9; color: #333; }
-        
-        header { 
-            background: #fff; 
-            padding: 10px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 5px solid #cc092f;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo-header { height: 50px; }
-
-        /* ÁREA DE LOGIN INTEGRADA NO TOPO (PADRÃO BANCO) */
-        .login-area { display: flex; align-items: center; gap: 15px; }
-        .input-login { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 120px; }
-        .btn-entrar { background: #004481; color: white; padding: 8px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-
-        .hero { 
-            background: #fff; 
-            padding: 60px 20px; 
-            text-align: center; 
-            border-bottom: 1px solid #ddd;
-        }
-
-        .hero h1 { font-size: 2.5em; margin: 0; color: #1a1a1a; }
-        .hero h1 b { color: #cc092f; }
-
-        .container { max-width: 1000px; margin: 40px auto; display: flex; gap: 30px; padding: 0 20px; }
-
-        .card-abertura { 
-            flex: 2; 
-            background: #fff; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-        }
-
-        .btn-abrir { 
-            display: inline-block; 
-            background: #cc092f; 
-            color: white; 
-            padding: 15px 40px; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            margin-top: 20px;
-        }
-
-        footer { 
-            text-align: center; 
-            padding: 40px; 
-            color: #666; 
-            font-size: 0.9em; 
-            line-height: 1.8; 
-            background: #fff;
-            border-top: 1px solid #eee;
-            margin-top: 60px;
-        }
+        :root { --br-red: #cc092f; --br-blue: #004481; --bg: #f4f7f9; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: #fff; padding: 15px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 6px solid var(--br-red); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { height: 55px; }
+        .login-bar { display: flex; gap: 10px; }
+        .login-bar input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100px; font-size: 14px; }
+        .btn-ok { background: var(--br-blue); color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .hero { background: #fff; padding: 70px 20px; text-align: center; border-bottom: 1px solid #ddd; }
+        .hero h1 { font-size: 2.8em; margin: 0; font-weight: 300; }
+        .hero h1 b { color: var(--br-red); font-weight: 800; }
+        .main-cta { max-width: 450px; margin: -40px auto 60px; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
+        .btn-open { display: block; background: var(--br-red); color: #fff; padding: 18px; text-decoration: none; border-radius: 4px; font-weight: 900; text-transform: uppercase; margin-top: 20px; }
+        footer { margin-top: auto; background: #fff; text-align: center; padding: 40px 20px; border-top: 1px solid #eee; color: #555; font-size: 0.95em; line-height: 1.8; }
     </style>
 </head>
 <body>
-
-<header>
-    <img src="logo.png" alt="Engecema" class="logo-header">
-    <div class="login-area">
-        <input type="text" class="input-login" placeholder="Agência">
-        <input type="text" class="input-login" placeholder="Conta">
-        <button class="btn-entrar">ACESSAR</button>
+    <header>
+        <img src="logo.png" alt="Engecema" class="logo">
+        <div class="login-bar">
+            <input type="text" placeholder="Agência">
+            <input type="text" placeholder="Conta">
+            <button class="btn-ok">OK</button>
+        </div>
+    </header>
+    <div class="hero">
+        <h1><b>Fomento Mercantil</b> e Tecnologia</h1>
+        <p>Acesse seu Internet Banking ou abra sua conta digital agora.</p>
     </div>
-</header>
-
-<div class="hero">
-    <h1><b>Fomento Mercantil</b> e Tecnologia</h1>
-    <p>Soluções inteligentes para gestão de ativos e fomento estratégico.</p>
-</div>
-
-<div class="container">
-    <div class="card-abertura">
-        <h2>Ainda não é cliente?</h2>
-        <p>Abra sua conta digital em poucos minutos e tenha acesso ao nosso ecossistema de fomento mercantil e tecnologia aplicada.</p>
-        <a href="#" class="btn-abrir">ABRIR MINHA CONTA</a>
+    <div class="main-cta">
+        <h2>Novo por aqui?</h2>
+        <p>Experimente a agilidade do fomento digital com a segurança Engecema.</p>
+        <a href="#" class="btn-open">ABRIR MINHA CONTA</a>
     </div>
-</div>
-
-<footer>
-    <p>
-        <strong>Engecema Engenharia Fomento e Tecnologia Ltda.</strong><br>
+    <footer>
+        <p><strong>Engecema Engenharia Fomento e Tecnologia Ltda.</strong><br>
         CNPJ 05.368.602/0001-10<br>
         Integração Segura via GitHub Enterprise & IBM Cloud Services.<br>
-        © 2026 Todos os Direitos Reservados.
-    </p>
-</footer>
-
+        © 2026 Todos os Direitos Reservados.</p>
+    </footer>
 </body>
 </html>
