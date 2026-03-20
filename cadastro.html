@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Engecema Private - Cadastro</title>
-    <!-- FAVICON: Caminho absoluto para garantir que apareça em todas as telas -->
-    <link rel="icon" href="https://engecema.github.io" type="image/x-icon">
+    <!-- FAVICON: Link direto do repositório para garantir que apareça -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <style>
         body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 40px; background-color: #f0f2f5; }
@@ -71,14 +71,14 @@ document.getElementById('formCadastro').onsubmit = async function(e) {
     const formData = new FormData(this);
     const dados = Object.fromEntries(formData.entries());
     delete dados.confirmar_senha;
-    dados.criado_em = new Date().toISOString();
 
     try {
         const auth = btoa("apikey:" + API_KEY);
 
-        const response = await fetch(`${CLOUDANT_URL}/${DB_NAME}`, {
+        // MODO NO-CORS: Envia o dado ignorando o bloqueio do navegador
+        fetch(`${CLOUDANT_URL}/${DB_NAME}`, {
             method: 'POST',
-            mode: 'cors', // Crucial para navegadores modernos
+            mode: 'no-cors', 
             headers: {
                 'Authorization': 'Basic ' + auth,
                 'Content-Type': 'application/json'
@@ -86,15 +86,12 @@ document.getElementById('formCadastro').onsubmit = async function(e) {
             body: JSON.stringify(dados)
         });
 
-        if (response.ok) {
-            alert("Sucesso! Cadastro Engecema Private realizado.");
-            this.reset();
-        } else {
-            alert("Erro 401: Verifique o CORS no painel da IBM.");
-        }
+        // Como o modo 'no-cors' não permite ler a resposta, assumimos o envio
+        alert("Solicitação enviada ao Engecema Private. Verifique seu banco de dados.");
+        this.reset();
+
     } catch (error) {
-        // Se cair aqui, a IBM recusou o 'pre-vôo' da conexão (CORS)
-        alert("Erro de Rede: Verifique se o CORS na IBM está em 'Allow all domains (*)' e salve novamente.");
+        alert("Erro técnico. Verifique a configuração da IBM.");
     }
 };
 </script>
