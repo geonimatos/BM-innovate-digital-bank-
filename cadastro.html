@@ -2,14 +2,15 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Engecema Private - Abertura de Conta</title>
+    <title>Engecema Private - Cadastro</title>
+    <!-- O Favicon permanece aqui -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f0f2f5; }
-        form { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { color: #0f62fe; text-align: center; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #dde1e6; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background-color: #0f62fe; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; }
-        button:hover { background-color: #0353e9; }
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f4f4f4; }
+        form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { margin-top: 0; color: #0f62fe; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
     </style>
 </head>
 <body>
@@ -17,60 +18,48 @@
 <form id="meuFormulario">
     <h2>Abertura de Conta</h2>
     <input type="text" name="nome" placeholder="Nome Completo" required>
-    <input type="email" name="email" placeholder="E-mail" required>
-    <button type="submit" id="btnEnviar">Finalizar Cadastro</button>
+    <input type="email" name="email" placeholder="E-mail Corporativo" required>
+    <button type="submit">Finalizar Cadastro</button>
 </form>
 
 <script>
 document.getElementById('meuFormulario').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = document.getElementById('btnEnviar');
-    btn.innerText = "Processando...";
-    btn.disabled = true;
 
-    // CREDENCIAIS
+    // 1. DADOS DE ACESSO (Engecema Private)
     const API_KEY = "G4mi3uBOjSMFifAA1Bhj6O7rEbZ5FBNyeJG7YH9fxg_n";
     const CLOUDANT_URL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud";
     const DB_NAME = "cliente_engecema";
 
     const formData = new FormData(e.target);
     const dados = Object.fromEntries(formData.entries());
-    dados.timestamp = new Date().toISOString();
+    dados.criado_em = new Date().toISOString();
 
     try {
-        // PASSO 1: GERAÇÃO DO TOKEN (Segurança Bancária)
-        // Usamos um Proxy CORS para evitar bloqueio do navegador ao pedir o Token
-        const authRes = await fetch("https://iam.cloud.ibm.com", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
-            body: `grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${API_KEY}`
-        });
-        
-        const authData = await authRes.json();
-        const accessToken = authData.access_token;
+        // Autenticação Basic Direta (Evita o erro de CORS do IAM Token)
+        const auth = btoa("apikey:" + API_KEY.trim());
 
-        // PASSO 2: ENVIO DOS DADOS COM TOKEN
         const response = await fetch(`${CLOUDANT_URL}/${DB_NAME}`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Authorization": `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
+                'Authorization': 'Basic ' + auth,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(dados)
         });
 
         if (response.ok) {
-            alert("Sucesso! Cadastro Engecema Private realizado com segurança de Token.");
+            alert("Sucesso! O Engecema Private recebeu seus dados.");
             e.target.reset();
         } else {
-            alert("Erro na gravação. Verifique se o banco 'cliente_engecema' existe.");
+            const erroData = await response.json();
+            console.error("Erro IBM:", erroData);
+            alert("Erro 401: Verifique se o CORS está em 'Allow all domains (*)' no Cloudant.");
         }
     } catch (error) {
-        console.error(error);
-        alert("Falha na comunicação com a IBM Cloud. Verifique o CORS.");
-    } finally {
-        btn.innerText = "Finalizar Cadastro";
-        btn.disabled = false;
+        console.error("Erro de Rede:", error);
+        alert("Falha de conexão. Verifique o painel da IBM Cloud.");
     }
 });
 </script>
