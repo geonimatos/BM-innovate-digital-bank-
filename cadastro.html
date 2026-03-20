@@ -3,59 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- LINHA 6: FAVICON INTEGRADO -->
-    <link rel="icon" type="image/png" href="logo.png"> 
-    <title>Engecema | Solicitar Acreditação de Fomento</title>
-    
+    <title>Cadastro - Engecema</title>
     <style>
-        :root { --br-red: #cc092f; --br-blue: #004481; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f4f7f9; color: #333; }
-        header { background: #fff; padding: 15px 10%; border-bottom: 6px solid var(--br-red); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { height: 50px; }
-        .container { max-width: 550px; margin: 50px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { color: var(--br-blue); text-align: center; margin-bottom: 25px; font-weight: 300; }
-        h2 b { color: var(--br-red); font-weight: 800; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; font-size: 14px; }
-        input { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
-        .btn-enviar { width: 100%; padding: 18px; background: var(--br-red); color: #fff; border: none; border-radius: 4px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-enviar:hover { background: #a50725; transform: translateY(-2px); }
-        footer { text-align: center; padding: 40px; color: #666; font-size: 0.95em; line-height: 1.8; }
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background-color: #f4f4f4; }
+        form { background: white; padding: 20px; border-radius: 8px; max-width: 400px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { background-color: #0062ff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; }
+        button:hover { background-color: #004ecc; }
     </style>
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="Engecema" class="logo">
-    </header>
 
-    <div class="container">
-        <h2>Acreditação de Conta <b>Fomento</b></h2>
-        <form id="formCadastro" onsubmit="event.preventDefault(); alert('Solicitação de Acreditação enviada para análise técnica.'); window.location.href='index.html';">
-            <div class="form-group">
-                <label>Nome Completo / Razão Social</label>
-                <input type="text" placeholder="Identificação do titular" required>
-            </div>
-            <div class="form-group">
-                <label>CPF ou CNPJ</label>
-                <input type="text" placeholder="Documento oficial" required>
-            </div>
-            <div class="form-group">
-                <label>E-mail Corporativo</label>
-                <input type="email" placeholder="nome@empresa.com.br" required>
-            </div>
-            <div class="form-group">
-                <label>Telefone / WhatsApp</label>
-                <input type="text" placeholder="(00) 00000-0000" required>
-            </div>
-            <button type="submit" class="btn-enviar">Solicitar Acreditação</button>
-        </form>
-    </div>
+    <h2>Formulário de Cadastro</h2>
 
-    <footer>
-        <p><strong>Engecema Engenharia Fomento e Tecnologia Ltda.</strong><br>
-        CNPJ 05.368.602/0001-10<br>
-        Integração Segura via GitHub Enterprise & IBM Cloud Services.<br>
-        © 2026 Todos os Direitos Reservados.</p>
-    </footer>
+    <!-- ATENÇÃO: Substitua a URL abaixo pelo seu endpoint da IBM Cloud -->
+    <form action="URL_DO_SEU_ENDPOINT_IBM_CLOUD" method="POST">
+        <div>
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+
+        <div>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone">
+        </div>
+
+        <button type="submit">Finalizar Cadastro</button>
+    </form>
+
 </body>
 </html>
