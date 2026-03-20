@@ -3,105 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engecema | Engenharia & Fomento Mercantil</title>
+    <meta name="description" content="Engecema - Engenharia e Construção Civil | Abertura de Contas e Gestão">
     
-    <!-- FAVICON INTEGRADO: Referência discutida no histórico -->
-    <link rel="icon" type="image/png" href="https://engecema.github.io">
-    <link rel="apple-touch-icon" href="https://engecema.github.io">
+    <!-- CONFIGURAÇÃO DO FAVICON (REFERÊNCIA: logo.png NA RAIZ) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- METADADOS DE COMPARTILHAMENTO (ESTILO BRADESCO) -->
+    <meta property="og:title" content="Engecema | Engenharia e Construção">
+    <meta property="og:description" content="Soluções integradas em engenharia. Acesse o portal ou abra sua conta.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://engecema.github.io">
+
+    <title>Engecema - Portal de Serviços e Engenharia</title>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
-        header { background: #003366; color: #fff; padding: 1.5rem 0; text-align: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid #f39c12; }
-        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
-        .container { width: 85%; margin: auto; padding: 20px; }
-        section { background: #fff; margin: 20px 0; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #003366; margin-bottom: 20px; border-left: 5px solid #f39c12; padding-left: 10px; }
-        #formCadastro { display: flex; flex-direction: column; gap: 15px; max-width: 450px; }
-        input { padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-        button { padding: 12px; background: #003366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.4s; }
-        button:hover { background: #f39c12; color: #003366; }
-        #mensagemFeedback { margin-top: 15px; font-weight: bold; font-size: 0.9rem; }
-        footer { text-align: center; padding: 40px; background: #002244; color: #fff; margin-top: 50px; font-size: 0.85rem; line-height: 1.8; }
+        /* Estilização Limpa e Profissional */
+        :root { --primary-color: #004481; --secondary-color: #f4f4f4; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; line-height: 1.6; color: #333; }
+        .header-main { background: var(--secondary-color); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ddd; }
+        .brand-logo { height: 50px; width: auto; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: var(--primary-color); font-weight: bold; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; text-align: center; }
+        .form-section { background: #fff; border: 1px solid #ddd; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-primary { background: var(--primary-color); color: white; padding: 12px 25px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; }
+        .footer-main { background: #333; color: white; text-align: center; padding: 20px 0; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>ENGECEMA</h1>
-        <nav>
+    <header class="header-main">
+        <img src="logo.png" alt="Logomarca Engecema" class="brand-logo">
+        <nav class="nav-links">
             <a href="#home">Home</a>
-            <a href="#fomento">Fomento Mercantil</a>
-            <a href="#cadastro">Abrir Conta</a>
-            <a href="admim.html">Portal Admin</a>
+            <a href="#servicos">Serviços</a>
+            <a href="admin.html" style="color: #d10000;">Painel Administrativo</a>
         </nav>
     </header>
 
-    <div class="container">
+    <main class="container">
         <section id="home">
-            <h2>Fomento Mercantil</h2>
-            <p>A Engecema transforma projetos em realidade com gestão técnica rigorosa e inovação na construção civil e soluções financeiras estratégicas.</p>
+            <h1>Engenharia com Excelência</h1>
+            <p>Seja bem-vindo ao portal de integração Engecema & IBM Cloud.</p>
         </section>
 
-        <section id="cadastro">
-            <h2>Abertura de Conta Corporativa</h2>
-            <p>Solicite seu acesso ao sistema de fomento e tecnologia Engecema.</p>
-            <form id="formCadastro">
-                <input type="text" id="nome" placeholder="Nome Completo / Razão Social" required>
-                <input type="email" id="email" placeholder="E-mail Corporativo" required>
-                <button type="submit">SOLICITAR ACESSO AGORA</button>
+        <!-- MÓDULO DE ABERTURA DE CONTA (INTEGRADO) -->
+        <section id="abertura" class="form-section">
+            <h2>Abertura de Conta Digital</h2>
+            <p>Preencha os dados abaixo para iniciar sua parceria com a Engecema.</p>
+            <form action="https://sua-api-ibmcloud.com" method="POST">
+                <input type="text" name="nome" placeholder="Nome Completo" style="width:80%; padding:10px; margin:10px;" required><br>
+                <input type="email" name="email" placeholder="E-mail Corporativo" style="width:80%; padding:10px; margin:10px;" required><br>
+                <button type="submit" class="btn-primary">Enviar Solicitação</button>
             </form>
-            <div id="mensagemFeedback"></div>
         </section>
-    </div>
 
-    <footer>
-        <p>&copy; 2026 Engecema Engenharia Fomento e Tecnologia Ltda</p>
-        <p>CNPJ: 10.368.602/0001-10</p>
-        <p>Sistema Integrado IBM Cloud & GitHub Enterprise</p>
+        <section id="admin-link" style="margin-top: 50px;">
+            <h3>Área Administrativa</h3>
+            <p>Para gestão de projetos e controle interno, utilize o link abaixo:</p>
+            <a href="admin.html" class="btn-primary">Acessar Admin.html</a>
+        </section>
+    </main>
+
+    <footer class="footer-main">
+        <p>&copy; 2024 Engecema. Sincronizado via GitHub & IBM Cloud.</p>
     </footer>
 
-    <script>
-        document.getElementById('formCadastro').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const feedback = document.getElementById('mensagemFeedback');
-            feedback.innerText = "Processando junto à IBM Cloud...";
-            feedback.style.color = "#003366";
-
-            const payload = {
-                nome: document.getElementById('nome').value,
-                email: document.getElementById('email').value,
-                smtp_pass: "skhk gugh efrg osqk", 
-                from_alias: "Atendimento Engecema <contato@engecema.com.br>",
-                empresa: "Engecema Engenharia Fomento e Tecnologia Ltda",
-                cnpj: "10.368.602/0001-10"
-            };
-
-            try {
-                const endpoint = "https://us-south.app-proto.cloud.ibm.com";
-                const api_key = "zE_X7D_4W_y-W_V-q_f-O_Y-x_Z-1_A_B_C_D_E";
-
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${api_key}`
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    feedback.innerText = "SOLICITAÇÃO ENVIADA! Verifique seu e-mail corporativo.";
-                    feedback.style.color = "#27ae60";
-                    e.target.reset();
-                } else {
-                    throw new Error("Erro na API IBM");
-                }
-            } catch (error) {
-                feedback.innerText = "ERRO DE SERVIDOR: Verifique a conexão ou API Key no Admin.";
-                feedback.style.color = "#c0392b";
-            }
-        });
-    </script>
 </body>
 </html>
