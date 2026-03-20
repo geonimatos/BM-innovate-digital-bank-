@@ -1,76 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro - Engecema Private</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f0f2f5; }
-        form { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { margin-top: 0; color: #0f62fe; text-align: center; margin-bottom: 25px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #dde1e6; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background-color: #0f62fe; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: background 0.2s; }
-        button:hover { background-color: #0353e9; }
-    </style>
-</head>
-<body>
-
-<form id="meuFormulario">
-    <h2>Abertura de Conta</h2>
-    <label>Nome Completo</label>
-    <input type="text" name="nome" placeholder="Digite seu nome" required>
-    
-    <label>E-mail Corporativo</label>
-    <input type="email" name="email" placeholder="seu@email.com" required>
-    
-    <button type="submit">Finalizar Cadastro</button>
-</form>
-
 <script>
 document.getElementById('meuFormulario').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // 1. CREDENCIAIS FORNECIDAS
     const APIKEY = "G4mi3uBOjSMFifAA1Bhj6O7rEbZ5FBNyeJG7YH9fxg_n";
-    const IAM_ID = "ApiKey-71c5e05c-1176-4fa6-bd22-e0514e317b4e"; 
     const CLOUDANT_URL = "https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud";
     const DB_NAME = "cliente_engecema";
 
-    // 2. PREPARAÇÃO DOS DADOS
     const formData = new FormData(e.target);
     const dados = Object.fromEntries(formData.entries());
     dados.criado_em = new Date().toISOString();
-    dados.auth_ref = IAM_ID; // Referência da IAM Key para auditoria interna
 
     try {
-        // A "SENHA" para o Cloudant é sempre a APIKEY (G4mi3u...)
-        // O "USUÁRIO" para o Cloudant é sempre a palavra 'apikey'
-        const authHeader = btoa("apikey:" + APIKEY.trim());
+        // PASSO 1: TROCAR APIKEY POR TOKEN (Evita o erro 401 de senha)
+        const tokenResponse = await fetch('https://iam.cloud.ibm.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+            body: `grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${APIKEY}`
+        });
+        const tokenData = await tokenResponse.json();
+        const accessToken = tokenData.access_token;
 
+        // PASSO 2: ENVIAR PARA O CLOUDANT USANDO O TOKEN
         const response = await fetch(`${CLOUDANT_URL}/${DB_NAME}`, {
             method: 'POST',
             headers: {
-                'Authorization': 'Basic ' + authHeader,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(dados)
         });
 
         if (response.ok) {
-            alert("Sucesso! Sua conta Engecema Private está sendo processada.");
+            alert("Sucesso! O Engecema Private recebeu seus dados.");
             e.target.reset();
         } else {
-            const erroData = await response.json();
-            console.error("Erro na Resposta IBM:", erroData);
-            alert("Erro 401: Verifique se o CORS no painel da IBM está em 'Allow all domains (*)'");
+            alert("Erro na gravação. Verifique se o banco 'cliente_engecema' existe.");
         }
     } catch (error) {
-        console.error("Erro de Conexão:", error);
-        alert("Falha de rede. Verifique a conexão com a IBM Cloud.");
+        console.error(error);
+        alert("Falha de conexão. O CORS deve estar em 'Allow all domains (*)'");
     }
 });
 </script>
-
-</body>
-</html>
