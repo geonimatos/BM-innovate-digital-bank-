@@ -3,128 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Engecema - Engenharia e Construção Civil">
+    <meta name="description" content="Engecema Engenharia Fomento Mercantil e Tecnologia">
     
-    <!-- FAVICON INTEGRADO (logo.png na raiz) -->
+    <!-- FAVICON INTEGRADO -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
 
-    <title>Engecema | Engenharia e Construção</title>
+    <title>Engecema | Fomento Mercantil e Tecnologia</title>
     
     <style>
-        /* LAYOUT ELOGIADO - ESTILO BRADESCO/IBM CLOUD */
+        /* DESIGN CORPORATIVO - ESTILO BANCO/IBM CLOUD */
         :root {
-            --primary-red: #cc092f;
-            --dark-grey: #333;
-            --bg-light: #f4f4f4;
+            --brand-red: #cc092f;
+            --brand-blue: #004481;
+            --bg-body: #f7f9fc;
         }
 
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: var(--bg-light); color: var(--dark-grey); }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: var(--bg-body); color: #222; }
         
         header { 
             background: #fff; 
-            padding: 20px 8%; 
+            padding: 15px 8%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            border-bottom: 5px solid var(--primary-red);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-bottom: 6px solid var(--brand-red);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .logo-header { height: 55px; }
+        .logo-img { height: 50px; }
 
-        .top-hero { 
+        .tag-status { 
+            font-size: 0.75em; 
+            color: var(--brand-blue); 
+            border: 1.5px solid var(--brand-blue); 
+            padding: 5px 12px; 
+            border-radius: 5px; 
+            font-weight: 900; 
+        }
+
+        .hero { 
             background: #fff; 
-            padding: 50px 20px; 
+            padding: 70px 20px; 
             text-align: center; 
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #e1e4e8;
         }
 
-        .top-hero h1 { color: var(--dark-grey); font-size: 2.2em; margin-bottom: 10px; }
-        .top-hero p { color: #666; font-size: 1.1em; }
+        /* TEXTO SUPERIOR CORRIGIDO CONFORME HISTÓRICO */
+        .hero h1 { font-size: 2.8em; color: #111; margin: 0; }
+        .hero p { font-size: 1.3em; color: #444; margin-top: 15px; }
 
-        .main-content { 
-            max-width: 1200px; 
-            margin: 40px auto; 
+        .container-cards { 
+            max-width: 1050px; 
+            margin: -40px auto 60px; 
             display: flex; 
-            gap: 30px; 
+            gap: 35px; 
             padding: 0 20px; 
         }
 
-        .card-service { 
+        .card { 
             flex: 1; 
             background: #fff; 
-            padding: 40px; 
-            border-radius: 4px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--primary-red);
+            padding: 50px 30px; 
+            border-radius: 6px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
-        .card-admin { border-top: 4px solid #004481; }
-
-        h2 { color: var(--primary-red); font-size: 1.8em; }
-        .card-admin h2 { color: #004481; }
-
-        .btn-access { 
+        .btn { 
             display: block; 
             width: 100%; 
-            padding: 15px; 
-            background: var(--primary-red); 
-            color: #fff; 
-            text-align: center; 
+            padding: 18px; 
+            margin-top: 30px; 
             text-decoration: none; 
             font-weight: bold; 
-            margin-top: 25px; 
-            border-radius: 3px;
+            border-radius: 4px; 
+            font-size: 1.1em;
         }
 
-        .btn-admin { background: #004481; }
+        .btn-red { background: var(--brand-red); color: #fff; }
+        .btn-blue { background: var(--brand-blue); color: #fff; }
 
         footer { 
             background: #fff; 
             text-align: center; 
-            padding: 30px; 
-            margin-top: 60px; 
-            border-top: 1px solid #ddd;
+            padding: 60px 20px; 
+            border-top: 1px solid #eee;
             color: #555;
-            line-height: 1.6;
+            font-size: 0.95em;
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="logo.png" alt="Engecema" class="logo-header">
-        <nav>
-            <strong style="color: var(--primary-red);">CONECTADO VIA IBM CLOUD</strong>
-        </nav>
+        <img src="logo.png" alt="Engecema" class="logo-img">
+        <div class="tag-status">CONECTADO: GITHUB & IBM CLOUD</div>
     </header>
 
-    <div class="top-hero">
-        <h1>Soluções em Engenharia para o seu Futuro</h1>
-        <p>Acesse sua conta ou utilize as ferramentas administrativas do portal Engecema.</p>
+    <div class="hero">
+        <!-- INÍCIO COM FOMENTO MERCANTIL CONFORME SOLICITADO -->
+        <h1>Fomento Mercantil e Tecnologia</h1>
+        <p>Soluções em engenharia financeira e gestão estratégica de ativos.</p>
     </div>
 
-    <div class="main-content">
-        <!-- ÁREA DE CLIENTE / ABERTURA -->
-        <div class="card-service">
-            <h2>Abertura de Conta</h2>
-            <p>Seja um parceiro Engecema. Clique abaixo para iniciar seu cadastro digital integrado.</p>
-            <a href="#" class="btn-access">ABRIR MINHA CONTA</a>
+    <div class="container-cards">
+        <div class="card" style="border-top: 5px solid var(--brand-red);">
+            <h2 style="color: var(--brand-red);">Abertura de Conta</h2>
+            <p>Seja um parceiro estratégico. Inicie sua jornada digital no portal Engecema.</p>
+            <a href="#" class="btn btn-red">ABRIR MINHA CONTA</a>
         </div>
 
-        <!-- ÁREA ADMINISTRATIVA -->
-        <div class="card-service card-admin">
-            <h2>Gestão e Admin</h2>
-            <p>Acesso exclusivo para administradores e engenheiros responsáveis pelo projeto.</p>
-            <a href="admin.html" class="btn-access btn-admin">ACESSAR ADMIN.HTML</a>
+        <div class="card" style="border-top: 5px solid var(--brand-blue);">
+            <h2 style="color: var(--brand-blue);">Painel Administrativo</h2>
+            <p>Controle de fomento, tecnologia e gestão de projetos internos.</p>
+            <a href="admin.html" class="btn btn-blue">ACESSAR ADMIN.HTML</a>
         </div>
     </div>
 
     <footer>
-        <p><strong>Engecema - Engenharia e Construção Civil Ltda.</strong><br>
-        Integração Segura via GitHub Enterprise & IBM Cloud Services.<br>
-        © 2024 Todos os Direitos Reservados.</p>
+        <p><strong>Engecema Engenharia Fomento e Tecnologia Ltda.</strong><br>
+        CNPJ: [05.368.602/0001-10](https://empresas.serasaexperian.com.br/consulta-gratis/ENGECEMA-ENGENHARIA-FOMENTO-E-TECNOLOGIA-LTDA-ME-05368602000110)<br>
+        Ambiente Seguro via GitHub Enterprise & IBM Cloud Services.<br>
+        © 2026 Todos os Direitos Reservados.</p>
     </footer>
 
 </body>
