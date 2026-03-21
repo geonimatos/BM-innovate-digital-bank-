@@ -3,76 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engecema Private | Cadastro Concluído</title>
+    <title>Engecema Private | Abertura de Conta</title>
+    <!-- Favicon conforme sua estrutura -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         :root {
             --gold: #c5a059;
             --bg: #1a1a1a;
-            --card: #2d2d2d;
+            --input-bg: #333333;
+            --card-bg: #2d2d2d;
+            --white: #ffffff;
         }
         body {
             background-color: var(--bg);
-            color: white;
+            color: var(--white);
             font-family: "Bradesco Sans", Arial, sans-serif;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
             text-align: center;
         }
-        .container {
+        .box {
+            background-color: var(--card-bg);
             padding: 50px;
             border: 1px solid var(--gold);
-            background-color: var(--card);
             border-radius: 4px;
+            width: 100%;
             max-width: 450px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
-        .icon { font-size: 60px; color: var(--gold); margin-bottom: 20px; }
-        h1 { color: var(--gold); font-weight: 300; margin-bottom: 15px; }
-        p { color: #aaa; line-height: 1.6; margin-bottom: 35px; }
+        h1 { color: var(--gold); font-weight: 300; margin-bottom: 25px; }
+        p { color: #999; margin-bottom: 30px; font-size: 14px; line-height: 1.5; }
         
-        .btn-acesso {
+        /* Estilo dos Inputs */
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            background: var(--input-bg);
+            border: 1px solid #444;
+            color: var(--white);
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus { border-color: var(--gold); outline: none; }
+
+        /* Botão Dourado */
+        .btn-gold {
             display: inline-block;
-            padding: 16px 40px;
+            width: 100%;
+            padding: 16px;
             background-color: var(--gold);
             color: #000;
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.3s ease;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
         }
-        .btn-acesso:hover {
-            background-color: #b08d4a;
-            transform: translateY(-3px);
-        }
-        .logo-footer { margin-top: 40px; opacity: 0.8; }
+        .btn-gold:hover { background-color: #b08d4a; transform: translateY(-2px); }
+
+        .logo-footer { margin-top: 40px; opacity: 0.6; }
+        .icon-check { font-size: 60px; color: var(--gold); margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="icon">✓</div>
-    <h1>Cadastro Concluído</h1>
-    <p>Seu perfil de investidor Engecema Private foi ativado. Sua grade de produtos em tempo real já está disponível via Dallas.</p>
-
-    <!-- LINK DEFINITIVO: Aponta para o arquivo produtos.html que já existe na sua raiz -->
-    <a href="produtos.html" class="btn-acesso">
-        Acessar Interface de Produtos
-    </a>
-
-    <div class="logo-footer">
-        <img src="logo.png" alt="Engecema Private" style="height: 45px;">
+    <!-- ETAPA 1: FORMULÁRIO DE CADASTRO -->
+    <div class="box" id="step-form">
+        <header><img src="logo.png" alt="Engecema" style="height: 45px; margin-bottom: 30px;"></header>
+        <h1>Abertura de Conta</h1>
+        <p>Preencha os dados abaixo para ativar seu perfil Private.</p>
+        
+        <input type="text" id="nome" placeholder="Nome Completo">
+        <input type="text" id="cpf" placeholder="CPF">
+        <input type="email" id="email" placeholder="E-mail Institucional">
+        
+        <button class="btn-gold" onclick="confirmarCadastro()">Finalizar Cadastro</button>
+        
+        <div class="logo-footer">Engecema Private Banking</div>
     </div>
-</div>
 
-<script>
-    // Log para auditoria no F12
-    console.log("Fluxo Engecema: Cadastro finalizado. Redirecionando para produtos.html.");
-</script>
+    <!-- ETAPA 2: TELA DE SUCESSO (OCULTA INICIALMENTE) -->
+    <div class="box" id="step-success" style="display: none;">
+        <div class="icon-check">✓</div>
+        <h1>Cadastro Concluído</h1>
+        <p>Seu acesso exclusivo à grade de produtos em tempo real foi liberado via IBM Cloud Dallas.</p>
+        
+        <!-- DIRECIONAMENTO DEFINITIVO -->
+        <a href="produtos.html" class="btn-gold">Acessar Interface de Produtos</a>
+        
+        <div class="logo-footer">
+            <img src="logo.png" alt="Engecema" style="height: 40px;">
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Lógica de transição de telas e registro de logs
+         */
+        function confirmarCadastro() {
+            // Simulação de processamento
+            document.getElementById('step-form').style.display = 'none';
+            document.getElementById('step-success').style.display = 'block';
+            
+            // Log de auditoria para o Continuous Delivery
+            console.log("Fluxo Engecema: Cadastro processado em us-south.");
+            console.log("Próximo passo: Carregar produtos.html e private-engine.js");
+        }
+    </script>
 
 </body>
 </html>
