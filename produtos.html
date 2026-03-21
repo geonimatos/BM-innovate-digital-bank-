@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Engecema Private | Produtos Bancários</title>
     
-    <!-- Configuração do Favicon (conforme sua pasta atual) -->
+    <!-- Ícone e Identidade Visual -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <style>
@@ -21,10 +21,11 @@
             color: var(--private-text);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
         header {
             border-bottom: 1px solid var(--private-gold);
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             background-color: #000;
         }
@@ -33,80 +34,111 @@
             margin: 0 auto;
             padding: 40px 20px;
         }
-        h1 { color: var(--private-gold); font-weight: 300; }
+        h1 { color: var(--private-gold); font-weight: 300; margin-bottom: 10px; }
+        p.subtitle { color: #888; margin-bottom: 40px; }
         
+        /* Grid de Produtos */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            gap: 25px;
         }
         .product-card {
             background: var(--private-gray);
             border: 1px solid #444;
-            padding: 25px;
+            padding: 30px;
             border-radius: 4px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
-        .product-card:hover { border-color: var(--private-gold); }
-        
-        .product-tag { color: var(--private-gold); font-size: 11px; text-transform: uppercase; }
-        
+        .product-card:hover {
+            border-color: var(--private-gold);
+            transform: translateY(-5px);
+        }
+        .product-tag {
+            color: var(--private-gold);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .product-card h3 { margin: 0 0 10px 0; font-size: 22px; }
+        .data-display {
+            margin: 20px 0;
+            font-size: 18px;
+            color: var(--private-gold);
+            font-weight: bold;
+        }
         .btn-investir {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
+            padding: 12px 30px;
             background-color: var(--private-gold);
             color: #000;
             text-decoration: none;
             font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            transition: opacity 0.2s;
+        }
+        .btn-investir:hover { opacity: 0.9; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 12px;
+            color: #555;
+            border-top: 1px solid #333;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <!-- Ajustado para usar sua logo.png existente -->
-    <img src="logo.png" alt="Engecema Private" style="height: 45px;">
+    <!-- Logo conforme repositório -->
+    <img src="logo.png" alt="Engecema Private" style="height: 50px;">
 </header>
 
 <div class="container">
     <h1>Produtos Bancários Private</h1>
-    <p>Gestão patrimonial com a tecnologia de espelhamento Bradesco.</p>
+    <p class="subtitle">Gestão de ativos integrada via IBM Cloudant & App Configuration.</p>
 
     <div class="product-grid">
-        <!-- Renda Fixa -->
+        <!-- CDB -->
         <div class="product-card">
             <span class="product-tag">Renda Fixa</span>
             <h3>CDB Escalonado</h3>
-            <p>Liquidez diária com taxas progressivas.</p>
-            <div id="taxa-cdb">102% do CDI</div>
-            <a href="cadastro.html" class="btn-investir">Acessar</a>
+            <p>Rentabilidade progressiva com liquidez para o segmento Private.</p>
+            <div id="taxa-cdb" class="data-display">Sincronizando...</div>
+            <a href="cadastro.html" class="btn-investir">Acessar Ativo</a>
         </div>
 
-        <!-- Investimentos -->
+        <!-- FUNDOS -->
         <div class="product-card">
-            <span class="product-tag">Fundos Private</span>
-            <h3>Multimercado Ágil</h3>
-            <p>Estratégia focada em ativos de baixa volatilidade.</p>
-            <div>Cota: R$ 2.450,32</div>
-            <a href="cadastro.html" class="btn-investir">Acessar</a>
+            <span class="product-tag">Investimentos</span>
+            <h3>Private Selection</h3>
+            <p>Fundo multimercado com curadoria exclusiva Engecema.</p>
+            <div id="taxa-fundos" class="data-display">Sincronizando...</div>
+            <a href="cadastro.html" class="btn-investir">Ver Detalhes</a>
         </div>
 
-        <!-- Crédito -->
+        <!-- LCI/LCA -->
         <div class="product-card">
-            <span class="product-tag">Crédito Estruturado</span>
-            <h3>LCA / LCI</h3>
-            <p>Isenção de IR para pessoa física.</p>
-            <div>Rentabilidade: 94% CDI</div>
-            <a href="cadastro.html" class="btn-investir">Acessar</a>
+            <span class="product-tag">Isenção de IR</span>
+            <h3>LCI / LCA</h3>
+            <p>Títulos de crédito imobiliário e do agronegócio com taxas Private.</p>
+            <div id="taxa-lci" class="data-display">Sincronizando...</div>
+            <a href="cadastro.html" class="btn-investir">Simular Agora</a>
         </div>
     </div>
 </div>
 
-<script>
-    console.log("Interface integrada via IBM Cloud Pipeline com sucesso.");
-</script>
+<footer>
+    &copy; 2024 Engecema Private. Integrado via IBM Cloud Continuous Delivery.
+</footer>
+
+<!-- SCRIPT UNIFICADO: Localizado na raiz conforme correção do commit -->
+<script src="private-engine.js"></script>
 
 </body>
 </html>
