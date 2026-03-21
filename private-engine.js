@@ -1,6 +1,7 @@
 /**
- * Engecema Private - Engine de Integração (IBM App Configuration)
- * Região: Dallas (us-south) | Credencial: serviço-private
+ * Engecema Private - Engine de Integração Bancária (v1.0.3)
+ * Localização: Raiz do repositório | Região: Dallas (us-south)
+ * Credenciais: serviço-private
  */
 
 const EngecemaPrivate = {
@@ -11,13 +12,21 @@ const EngecemaPrivate = {
         collectionId: "engecema-private-collection" 
     },
 
+    /**
+     * Inicializa a conexão com a IBM Cloud
+     */
     async init() {
-        console.log("Engecema Engine: Conectando ao App Configuration em Dallas...");
+        console.log("Engecema Private: Sincronizando com IBM Cloud Dallas...");
         await this.fetchData();
+        
+        // Atualização automática a cada 5 minutos
+        setInterval(() => this.fetchData(), 300000);
     },
 
+    /**
+     * Busca dados reais do App Configuration em Dallas
+     */
     async fetchData() {
-        // CORREÇÃO: URL completa e oficial da IBM Cloud App Configuration
         const url = `https://${this.settings.region}://{this.settings.guid}/collections/${this.settings.collectionId}/values`;
 
         try {
@@ -29,37 +38,47 @@ const EngecemaPrivate = {
                 }
             });
 
-            if (!response.ok) throw new Error('Erro de autenticação ou GUID inválido');
+            if (!response.ok) throw new Error(`Status: ${response.status}`);
             
             const data = await response.json();
-            this.render(data);
+            console.log("Engecema Private: Dados recebidos com sucesso.");
+            this.render(data.properties || {});
         } catch (error) {
-            console.warn("Modo Fallback ativado (Verifique se a Collection existe na IBM Cloud):", error);
+            console.error("Engecema Private: Erro na conexão. Ativando Fallback.", error);
             this.renderFallback();
         }
     },
 
-    render(data) {
-        const props = data.properties || {};
+    /**
+     * Renderiza os valores na interface do produtos.html
+     */
+    render(props) {
+        // Mapeamento dinâmico baseado nos IDs que você criou na IBM Cloud
+        const taxaCdb = props.taxa_cdb?.value || "102";
+        const cotaPrivate = props.cota_private?.value || "2.450,32";
+        const taxaLci = props.taxa_lci?.value || "94";
 
-        const cdbEl = document.getElementById('taxa-cdb');
-        if (cdbEl) cdbEl.innerHTML = `<strong>${props.taxa_cdb?.value || '102%'} do CDI</strong>`;
-
-        const fundoEl = document.getElementById('taxa-fundos');
-        if (fundoEl) {
-            const cota = props.cota_private?.value || '2.450,32';
-            fundoEl.innerHTML = `Cota: R$ ${cota}`;
+        if(document.getElementById('taxa-cdb')) {
+            document.getElementById('taxa-cdb').innerHTML = `<strong>${taxaCdb}% do CDI</strong>`;
         }
-
-        const lciEl = document.getElementById('taxa-lci');
-        if (lciEl) lciEl.innerHTML = `<strong>${props.taxa_lci?.value || '94%'} do CDI</strong>`;
+        if(document.getElementById('taxa-fundos')) {
+            document.getElementById('taxa-fundos').innerHTML = `Cota: R$ ${cotaPrivate}`;
+        }
+        if(document.getElementById('taxa-lci')) {
+            document.getElementById('taxa-lci').innerHTML = `<strong>${taxaLci}% do CDI</strong>`;
+        }
     },
 
+    /**
+     * Valores de segurança (Offline Mode)
+     */
     renderFallback() {
-        if(document.getElementById('taxa-cdb')) document.getElementById('taxa-cdb').innerText = "102% do CDI";
-        if(document.getElementById('taxa-fundos')) document.getElementById('taxa-fundos').innerText = "Cota: R$ 2.450,32";
-        if(document.getElementById('taxa-lci')) document.getElementById('taxa-lci').innerText = "94% do CDI";
+        const fallback = { cdb: "102%", cota: "2.450,32", lci: "94%" };
+        if(document.getElementById('taxa-cdb')) document.getElementById('taxa-cdb').innerText = fallback.cdb + " do CDI";
+        if(document.getElementById('taxa-fundos')) document.getElementById('taxa-fundos').innerText = "Cota: R$ " + fallback.cota;
+        if(document.getElementById('taxa-lci')) document.getElementById('taxa-lci').innerText = fallback.lci + " do CDI";
     }
 };
 
+// Dispara a execução ao carregar a página
 document.addEventListener('DOMContentLoaded', () => EngecemaPrivate.init());
