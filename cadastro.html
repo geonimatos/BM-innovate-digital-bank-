@@ -3,118 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engecema Private | Abertura de Conta</title>
-    <!-- Favicon conforme sua estrutura -->
+    <title>Bradesco | Cadastro Engecema Private</title>
+    <!-- Identidade Visual e Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         :root {
-            --gold: #c5a059;
-            --bg: #1a1a1a;
-            --input-bg: #333333;
-            --card-bg: #2d2d2d;
-            --white: #ffffff;
+            --bradesco-red: #cc092f;
+            --bradesco-gray: #f4f4f4;
+            --text-dark: #333333;
         }
         body {
-            background-color: var(--bg);
-            color: var(--white);
+            background-color: var(--bradesco-gray);
             font-family: "Bradesco Sans", Arial, sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            text-align: center;
         }
-        .box {
-            background-color: var(--card-bg);
-            padding: 50px;
-            border: 1px solid var(--gold);
-            border-radius: 4px;
+        .container {
+            background-color: #ffffff;
             width: 100%;
             max-width: 450px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            padding: 40px;
+            border-top: 6px solid var(--bradesco-red);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 4px;
         }
-        h1 { color: var(--gold); font-weight: 300; margin-bottom: 25px; }
-        p { color: #999; margin-bottom: 30px; font-size: 14px; line-height: 1.5; }
-        
-        /* Estilo dos Inputs */
+        header { text-align: center; margin-bottom: 30px; }
+        h2 { 
+            color: var(--text-dark); 
+            font-weight: 400; 
+            text-align: center; 
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #666; font-size: 14px; }
         input {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            background: var(--input-bg);
-            border: 1px solid #444;
-            color: var(--white);
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
-        input:focus { border-color: var(--gold); outline: none; }
-
-        /* Botão Dourado */
-        .btn-gold {
-            display: inline-block;
+        input:focus { border-color: var(--bradesco-red); outline: none; }
+        
+        /* Botão Padrão Bradesco */
+        .btn-bradesco {
             width: 100%;
             padding: 16px;
-            background-color: var(--gold);
-            color: #000;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background-color: var(--bradesco-red);
+            color: #ffffff;
             border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 14px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: background 0.3s;
         }
-        .btn-gold:hover { background-color: #b08d4a; transform: translateY(-2px); }
+        .btn-bradesco:hover { background-color: #a00725; }
 
-        .logo-footer { margin-top: 40px; opacity: 0.6; }
-        .icon-check { font-size: 60px; color: var(--gold); margin-bottom: 20px; }
+        /* Tela de Sucesso */
+        .success-box { display: none; text-align: center; }
+        .icon-check { font-size: 60px; color: #28a745; margin-bottom: 20px; }
+        
+        .footer-info {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ETAPA 1: FORMULÁRIO DE CADASTRO -->
-    <div class="box" id="step-form">
-        <header><img src="logo.png" alt="Engecema" style="height: 45px; margin-bottom: 30px;"></header>
-        <h1>Abertura de Conta</h1>
-        <p>Preencha os dados abaixo para ativar seu perfil Private.</p>
-        
-        <input type="text" id="nome" placeholder="Nome Completo">
-        <input type="text" id="cpf" placeholder="CPF">
-        <input type="email" id="email" placeholder="E-mail Institucional">
-        
-        <button class="btn-gold" onclick="confirmarCadastro()">Finalizar Cadastro</button>
-        
-        <div class="logo-footer">Engecema Private Banking</div>
-    </div>
+    <div class="container">
+        <!-- ETAPA 1: FORMULÁRIO COMPLETO (5 CAMPOS) -->
+        <div id="step-register">
+            <header>
+                <img src="logo.png" alt="Bradesco Engecema" style="height: 45px;">
+            </header>
+            <h2>Realizar Cadastro</h2>
+            
+            <div class="form-group">
+                <input type="text" id="nome" placeholder="Nome Completo">
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+                <input type="text" id="cpf" placeholder="CPF">
+            </div>
+            <div class="form-group">
+                <input type="password" id="senha" placeholder="Senha">
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirma-senha" placeholder="Confirmar Senha">
+            </div>
 
-    <!-- ETAPA 2: TELA DE SUCESSO (OCULTA INICIALMENTE) -->
-    <div class="box" id="step-success" style="display: none;">
-        <div class="icon-check">✓</div>
-        <h1>Cadastro Concluído</h1>
-        <p>Seu acesso exclusivo à grade de produtos em tempo real foi liberado via IBM Cloud Dallas.</p>
-        
-        <!-- DIRECIONAMENTO DEFINITIVO -->
-        <a href="produtos.html" class="btn-gold">Acessar Interface de Produtos</a>
-        
-        <div class="logo-footer">
-            <img src="logo.png" alt="Engecema" style="height: 40px;">
+            <button class="btn-bradesco" onclick="processarCadastro()">Finalizar Cadastro</button>
         </div>
+
+        <!-- ETAPA 2: SUCESSO E DIRECIONAMENTO PRIVATE -->
+        <div id="step-success" class="success-box">
+            <div class="icon-check">✓</div>
+            <h2>Registro Concluído</h2>
+            <p style="color: #666; line-height: 1.5; margin-bottom: 30px;">
+                Seu perfil Private Engecema foi ativado. Sua grade de produtos em tempo real já está disponível.
+            </p>
+            
+            <!-- Botão que ativa o fluxo para produtos.html e Dallas -->
+            <button class="btn-bradesco" onclick="window.location.href='produtos.html'">
+                Acessar Interface de Produtos
+            </a>
+        </div>
+
+        <div class="footer-info">Engecema Private Banking | us-south (Dallas)</div>
     </div>
 
     <script>
         /**
-         * Lógica de transição de telas e registro de logs
+         * Lógica Unificada de Transição de Telas
          */
-        function confirmarCadastro() {
-            // Simulação de processamento
-            document.getElementById('step-form').style.display = 'none';
-            document.getElementById('step-success').style.display = 'block';
+        function processarCadastro() {
+            // Validação simples de preenchimento
+            const campos = ['nome', 'email', 'cpf', 'senha', 'confirma-senha'];
+            let valido = true;
             
-            // Log de auditoria para o Continuous Delivery
-            console.log("Fluxo Engecema: Cadastro processado em us-south.");
-            console.log("Próximo passo: Carregar produtos.html e private-engine.js");
+            campos.forEach(id => {
+                if(!document.getElementById(id).value) valido = false;
+            });
+
+            if(valido) {
+                document.getElementById('step-register').style.display = 'none';
+                document.getElementById('step-success').style.display = 'block';
+                console.log("Fluxo Bradesco: Cadastro finalizado. Pronto para navegar para produtos.html");
+            } else {
+                alert("Por favor, preencha todos os 5 campos do formulário.");
+            }
         }
     </script>
 
