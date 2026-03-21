@@ -3,119 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engecema Private | Carteira de Investimentos</title>
-    <!-- Favicon conforme sua estrutura -->
+    <title>Engecema Private | Finalizar Cadastro</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         :root {
             --gold: #c5a059;
-            --dark: #1a1a1a;
-            --card-bg: #2d2d2d;
+            --bg: #1a1a1a;
             --white: #ffffff;
         }
         body {
-            background-color: var(--dark);
+            background-color: var(--bg);
             color: var(--white);
             font-family: "Bradesco Sans", Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             text-align: center;
         }
-        header {
-            padding: 25px;
-            border-bottom: 2px solid var(--gold);
-            background-color: #000;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-        h1 { color: var(--gold); font-weight: 300; font-size: 32px; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        .card {
-            background: var(--card-bg);
-            border: 1px solid #444;
-            padding: 35px;
+        .confirmation-box {
+            background: #2d2d2d;
+            padding: 50px;
+            border: 1px solid var(--gold);
             border-radius: 4px;
-            transition: 0.3s;
+            max-width: 500px;
         }
-        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .tag { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
-        .taxa-valor {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--gold);
-            margin: 20px 0;
-        }
-        .btn-private {
+        h1 { color: var(--gold); font-weight: 300; margin-bottom: 20px; }
+        p { color: #ccc; margin-bottom: 30px; line-height: 1.6; }
+        
+        .btn-finalizar {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 15px 40px;
             background-color: var(--gold);
             color: #000;
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 13px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
-        footer {
-            margin-top: 60px;
-            padding: 30px;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #333;
+        .btn-finalizar:hover {
+            background-color: #b08d4a;
+            transform: scale(1.05);
+        }
+        .footer-logo {
+            margin-top: 30px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <!-- Logo confirmada no repositório -->
-    <img src="logo.png" alt="Engecema Private" style="height: 55px;">
-</header>
+<div class="confirmation-box">
+    <div class="icon-success" style="font-size: 50px; color: var(--gold); margin-bottom: 20px;">✓</div>
+    <h1>Cadastro Concluído</h1>
+    <p>Seu perfil de investidor Private foi configurado com sucesso. Agora você tem acesso exclusivo à nossa grade de produtos em tempo real.</p>
 
-<div class="container">
-    <h1>Produtos Bancários Private</h1>
-    <p style="color: #999;">Monitoramento de ativos em tempo real via IBM Cloud Dallas.</p>
+    <!-- BOTÃO DEFINITIVO DE REDIRECIONAMENTO -->
+    <a href="produtos.html" class="btn-finalizar">
+        Acessar Interface de Produtos
+    </a>
 
-    <div class="grid">
-        <!-- Card 1: CDB -->
-        <div class="card">
-            <span class="tag">Renda Fixa</span>
-            <h3 style="margin: 15px 0;">CDB Escalonado</h3>
-            <div id="taxa-cdb" class="taxa-valor">Sincronizando...</div>
-            <a href="cadastro.html" class="btn-private">Detalhes</a>
-        </div>
-
-        <!-- Card 2: FUNDOS -->
-        <div class="card">
-            <span class="tag">Investimentos</span>
-            <h3 style="margin: 15px 0;">Private Selection</h3>
-            <div id="taxa-fundos" class="taxa-valor">Sincronizando...</div>
-            <a href="cadastro.html" class="btn-private">Ver Cota</a>
-        </div>
-
-        <!-- Card 3: LCI/LCA -->
-        <div class="card">
-            <span class="tag">Isenção de IR</span>
-            <h3 style="margin: 15px 0;">LCI / LCA</h3>
-            <div id="taxa-lci" class="taxa-valor">Sincronizando...</div>
-            <a href="cadastro.html" class="btn-private">Simular</a>
-        </div>
+    <div class="footer-logo">
+        <img src="logo.png" alt="Engecema Private" style="height: 40px;">
     </div>
 </div>
 
-<footer>
-    &copy; 2024 Engecema Private. Conectado: us-south (Dallas).
-</footer>
-
-<!-- Chamada Única do Motor de Dallas na Raiz -->
-<script src="private-engine.js"></script>
+<script>
+    // Log de auditoria para o IBM Cloud Pipeline
+    console.log("Fluxo de Cadastro Finalizado. Aguardando navegação para produtos.html");
+</script>
 
 </body>
 </html>
