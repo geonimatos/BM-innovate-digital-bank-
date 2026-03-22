@@ -2,50 +2,29 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="logo.png">
-    <title>Bradesco Private | Ativos e Fomento</title>
+    <title>Bradesco Private | Gestão de Ativos</title>
     <style>
-        :root { --br-red: #cc092f; --br-gold: #c5a059; --br-dark: #0e0e0e; --card: #1c1c1c; }
-        body { background: var(--br-dark); color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; overflow-x: hidden; }
-        
-        header { 
-            background: #000; padding: 15px 50px; border-bottom: 1px solid var(--br-gold); 
-            display: flex; justify-content: space-between; align-items: center; 
-            position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box;
-        }
-        .logo-private { height: 35px; }
-        .status-dallas { color: var(--br-gold); font-size: 10px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
-
-        .container { padding: 120px 50px 50px; max-width: 1200px; margin: 0 auto; }
-        
-        .card-patrimonio { 
-            background: var(--card); padding: 60px; border-left: 6px solid var(--br-gold); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8); transition: 0.3s;
-        }
-        .label-total { color: #666; text-transform: uppercase; font-size: 11px; letter-spacing: 3px; display: block; margin-bottom: 15px; }
-        .valor-principal { color: var(--br-gold); font-size: 56px; margin: 0; font-weight: 300; }
-        .info-sync { color: #333; font-size: 11px; margin-top: 20px; border-top: 1px solid #222; padding-top: 15px; }
-
-        /* Estilo da aba de senha (caso seja chamado aqui) */
-        #aba-private-engine { position: fixed; top: 0; right: 0; width: 400px; height: 100%; background: #111; z-index: 9999; border-left: 2px solid var(--br-gold); }
+        body { background:#0e0e0e; color:#fff; font-family:Arial; margin:0; }
+        .card { background:#1c1c1c; padding:60px; margin:100px auto; max-width:900px; border-left:6px solid #c5a059; box-shadow:0 15px 40px #000; }
+        h1 { color:#c5a059; font-size:52px; margin:15px 0; font-weight:300; }
     </style>
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="Bradesco Private" class="logo-private">
-        <div class="status-dallas">● Conexão Segura: Dallas us-south</div>
-    </header>
-
-    <div class="container">
-        <div class="card-patrimonio">
-            <span class="label-total">Patrimônio Consolidado sob Gestão</span>
-            <h1 id="valor-ibm" class="valor-principal">R$ 1.250.000,00</h1>
-            <div class="info-sync">Sincronizado via IBM Cloudant Webhook | 2026</div>
-        </div>
+    <div class="card">
+        <span style="color:#555; text-transform:uppercase; font-size:11px; letter-spacing:3px;">Patrimônio Consolidado</span>
+        <h1 id="valor-ibm">R$ 1.250.000,00</h1>
     </div>
-
-    <!-- CHAMADA DO MOTOR DE SEGURANÇA ESPELHADO -->
-    <script src="private-engine.js"></script>
+    <script>
+        async function conectarIBM() {
+            try {
+                const res = await fetch('https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud');
+                const data = await res.json();
+                let total = 0;
+                data.rows.forEach(r => { if(r.doc.valor) total += parseFloat(r.doc.valor); });
+                if(total > 0) document.getElementById('valor-ibm').innerText = "R$ " + total.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            } catch(e) { console.log("Dallas Offline"); }
+        }
+        conectarIBM();
+    </script>
 </body>
 </html>
