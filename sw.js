@@ -1,7 +1,10 @@
+/* SERVICE WORKER ENGECEMA - ATUALIZADOR DE CACHE DALLAS */
+const CACHE_NAME = 'engecema-private-v2';
+
 self.addEventListener('install', (e) => {
-  self.skipWaiting(); // Força a atualização imediata do Service Worker
+  self.skipWaiting(); // Força a atualização para a nova versão com Aba de Senha
   e.waitUntil(
-    caches.open('engecema-private-v2').then((cache) => cache.addAll([
+    caches.open(CACHE_NAME).then((cache) => cache.addAll([
       'index.html',
       'logo.png',
       'private-engine.js',
@@ -11,8 +14,18 @@ self.addEventListener('install', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Tenta buscar na rede primeiro para garantir que a Aba de Senha apareça
+  // Estratégia: Tenta rede primeiro para garantir a segurança da aba
   e.respondWith(
     fetch(e.request).catch(() => caches.match(e.request))
+  );
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(keys.map((key) => {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      }));
+    })
   );
 });
