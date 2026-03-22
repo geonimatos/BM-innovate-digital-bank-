@@ -2,132 +2,97 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engecema Private | Ativos & Fomento</title>
+    <title>Engecema Private | Validação Digital</title>
     <style>
-        :root {
-            --bradesco-red: #cc092f;
-            --private-gold: #c5a059;
-            --bg-dark: #0e0e0e;
-            --card-gray: #1c1c1c;
+        /* BLOQUEIO TOTAL E FORÇADO DA ABA LATERAL */
+        #aba-senha-obrigatoria {
+            position: fixed !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 400px !important;
+            height: 100vh !important;
+            background: #111111 !important;
+            z-index: 9999999 !important; /* Acima de qualquer elemento */
+            border-left: 2px solid #c5a059 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 60px 40px !important;
+            box-shadow: -20px 0 60px #000 !important;
+            color: #ffffff !important;
+            font-family: Arial, sans-serif !important;
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-dark); font-family: Arial, sans-serif; overflow: hidden; }
-
-        /* ABA DE SENHA LATERAL (IDENTIFICAÇÃO DIGITAL) */
-        #aba-senha-lateral {
-            position: fixed; top: 0; right: 0; width: 400px; height: 100%;
-            background: #111; z-index: 10000; border-left: 1px solid var(--private-gold);
-            display: flex; flex-direction: column; padding: 60px 40px;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.9);
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        body { background: #000; margin: 0; overflow: hidden; }
+        
+        .input-private {
+            width: 100%; padding: 20px; background: #000; border: 1px solid #333;
+            color: #c5a059; font-size: 32px; text-align: center; letter-spacing: 12px;
+            margin: 30px 0; outline: none;
         }
 
-        .aba-fechada { transform: translateX(100%); }
-
-        .aba-header { border-bottom: 1px solid #333; padding-bottom: 25px; margin-bottom: 35px; }
-        .aba-header h2 { color: var(--private-gold); font-size: 16px; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
-        .aba-header p { color: #666; font-size: 12px; margin-top: 10px; line-height: 1.6; }
-
-        input[type="password"] {
-            width: 100%; padding: 20px; background: #000; border: 1px solid #444;
-            color: var(--private-gold); font-size: 32px; text-align: center; letter-spacing: 12px; 
-            margin-bottom: 25px; border-radius: 4px; outline: none; box-sizing: border-box;
+        .btn-private {
+            width: 100%; padding: 22px; background: #cc092f; color: #fff;
+            border: none; font-weight: bold; text-transform: uppercase; cursor: pointer;
         }
 
-        .btn-confirmar {
-            background: var(--bradesco-red); color: white; border: none;
-            padding: 22px; width: 100%; font-weight: bold; cursor: pointer; 
-            text-transform: uppercase; border-radius: 4px; font-size: 14px;
-        }
-
-        /* PAINEL DE GESTÃO (CONTEÚDO DALLAS) */
-        #painel-fundo { filter: blur(10px); pointer-events: none; transition: 0.6s; padding-top: 80px; }
-
-        header {
-            background: #000; border-bottom: 1px solid var(--private-gold);
-            padding: 15px 50px; display: flex; justify-content: space-between;
-            position: fixed; top: 0; width: 100%; z-index: 1000; align-items: center;
-        }
-
-        .card-patrimonio {
-            background: var(--card-gray); padding: 60px; margin: 60px auto; max-width: 1000px;
-            border-left: 6px solid var(--private-gold); box-shadow: 0 15px 45px rgba(0,0,0,0.7);
-        }
-
-        .card-patrimonio h1 { color: var(--private-gold); font-size: 56px; margin: 15px 0; font-weight: 300; }
-        .status-tag { color: var(--private-gold); font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        /* PAINEL (INVISÍVEL ATÉ A SENHA) */
+        #painel-dallas { display: none; padding: 100px 50px; }
     </style>
 </head>
 <body>
 
-<!-- 1. ABA DE SENHA (O "PORTEIRO" DO PRODUTOS.HTML) -->
-<div id="aba-senha-lateral">
-    <div class="aba-header">
-        <img src="logo.png" alt="Bradesco" style="height: 30px; margin-bottom: 20px;">
-        <h2>Validação Private</h2>
-        <p>Acesse sua posição consolidada de ativos informando a senha de 4 dígitos para o terminal Dallas us-south.</p>
-    </div>
+<!-- ABA DE SENHA LATERAL (A QUE DEVE APARECER) -->
+<div id="aba-senha-obrigatoria">
+    <img src="logo.png" style="height: 30px; margin-bottom: 25px; width: fit-content;">
+    <h2 style="color: #c5a059; font-size: 16px; text-transform: uppercase;">Senha de Acesso</h2>
+    <p style="color: #666; font-size: 13px; line-height: 1.6;">
+        Terminal Dallas (us-south).<br>Informe a senha de 4 dígitos para identificação.
+    </p>
+
+    <input type="password" id="pw-private" class="input-private" maxlength="4" placeholder="••••">
     
-    <input type="password" id="senha-digitos" maxlength="4" placeholder="••••">
-    <button class="btn-confirmar" onclick="validarAcesso()">Confirmar Acesso</button>
-    <p id="erro-auth" style="color: #ff3333; font-size: 11px; margin-top: 20px; display: none; text-align: center;">Senha inválida ou terminal não autorizado.</p>
+    <button class="btn-private" onclick="liberarSistema()">Confirmar Acesso</button>
+    
+    <p id="msg-erro" style="color: #cc092f; font-size: 11px; margin-top: 25px; display: none; text-align: center;">
+        Acesso não autorizado para este terminal.
+    </p>
 </div>
 
-<!-- 2. PAINEL DE GESTÃO (SÓ LIBERA PÓS-SENHA) -->
-<div id="painel-fundo">
-    <header>
-        <img src="logo.png" alt="Engecema Private" style="height: 35px;">
-        <div class="status-tag">● CONEXÃO SEGURA: DALLAS ENGINE (US-SOUTH)</div>
-    </header>
-
-    <main class="card-patrimonio">
-        <span style="color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 3px;">Patrimônio Consolidado sob Gestão</span>
-        <h1 id="valor-consolidado">Consultando IBM Cloud...</h1>
-        <p style="color: #333; font-size: 12px; margin: 0;">Dados sincronizados via Cloudant Webhook em tempo real.</p>
-    </main>
+<!-- PAINEL DE GESTÃO -->
+<div id="painel-dallas">
+    <div style="background: #1c1c1c; padding: 60px; border-left: 5px solid #c5a059;">
+        <span style="color: #555; text-transform: uppercase; font-size: 11px;">Patrimônio Consolidado</span>
+        <h1 id="saldo-ibm" style="color: #c5a059; font-size: 52px; font-weight: 300;">R$ 1.250.000,00</h1>
+    </div>
 </div>
 
 <script>
-    // FUNÇÃO DE DESTRAVAMENTO
-    function validarAcesso() {
-        const pass = document.getElementById('senha-digitos').value;
+    function liberarSistema() {
+        const senha = document.getElementById('pw-private').value;
         
-        // Validação básica de 4 dígitos para teste (Pode ser integrada ao banco Usuários depois)
-        if (pass.length === 4) {
-            document.getElementById('aba-senha-lateral').classList.add('aba-fechada');
-            document.getElementById('painel-fundo').style.filter = 'none';
-            document.getElementById('painel-fundo').style.pointerEvents = 'auto';
+        // Simulação de trava (4 dígitos)
+        if(senha.length === 4) {
+            document.getElementById('aba-senha-obrigatoria').style.display = 'none';
+            document.getElementById('painel-dallas').style.display = 'block';
             document.body.style.overflow = 'auto';
-            
-            conectarCloudant(); // Dispara a leitura do banco 'transacoes'
+            conectarCloudant(); // Busca dados na IBM Cloud
         } else {
-            document.getElementById('erro-auth').style.display = 'block';
+            document.getElementById('msg-erro').style.display = 'block';
         }
     }
 
-    // INTEGRAÇÃO COM BANCO 'transacoes' DA IBM
-    const URL_CLOUDANT = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
-
     async function conectarCloudant() {
+        const URL = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
         try {
-            const response = await fetch(URL_CLOUDANT);
-            const data = await response.json();
-            const docs = data.rows.map(r => r.doc);
-            
-            // Soma dos 7 documentos (campo 'valor')
+            const res = await fetch(URL);
+            const data = await res.json();
             let total = 0;
-            docs.forEach(doc => { if(doc.valor) total += parseFloat(doc.valor); });
-
-            const display = total > 0 ? 
-                `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : 
-                'R$ 1.250.000,00';
-            
-            document.getElementById('valor-consolidado').innerText = display;
-
-        } catch (error) {
-            console.error("Erro de sincronização Dallas.");
-            document.getElementById('valor-consolidado').innerText = 'R$ 1.250.000,00';
+            data.rows.forEach(r => { if(r.doc.valor) total += parseFloat(r.doc.valor); });
+            if(total > 0) {
+                document.getElementById('saldo-ibm').innerText = "R$ " + total.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            }
+        } catch (e) {
+            console.log("Dallas Offline");
         }
     }
 </script>
