@@ -2,45 +2,78 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Engecema Private | Validação Dallas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bradesco Private | Validação Dallas</title>
     <style>
         :root { --red: #cc092f; --gold: #c5a059; --dark: #0e0e0e; }
-        body { background: var(--dark); margin: 0; overflow: hidden; font-family: Arial, sans-serif; display: flex; justify-content: flex-end; }
-        #aba-private {
-            width: 400px; height: 100vh; background: #111; border-left: 2px solid var(--gold);
-            display: flex; flex-direction: column; padding: 60px 40px; box-shadow: -20px 0 70px #000; color: #fff;
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--dark); font-family: Arial, sans-serif; overflow: hidden; display: flex; justify-content: flex-end; }
+
+        /* ABA LATERAL DIREITA ESPELHADA BRADESCO */
+        #aba-private-v4 {
+            width: 410px; height: 100vh; background: #111; z-index: 999999; 
+            border-left: 2px solid var(--gold); display: flex; flex-direction: column; 
+            padding: 60px 40px; box-shadow: -20px 0 70px #000; color: #fff; box-sizing: border-box;
         }
-        input { width: 100%; padding: 20px; background: #000; border: 1px solid #333; color: var(--gold); font-size: 32px; text-align: center; letter-spacing: 10px; margin: 30px 0; outline: none; }
-        button { width: 100%; padding: 20px; background: var(--red); color: #fff; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+
+        .aba-header img { height: 30px; margin-bottom: 25px; }
+        .aba-header h2 { color: var(--gold); font-size: 16px; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
+        .aba-header p { color: #666; font-size: 12px; margin-top: 10px; line-height: 1.6; }
+
+        input { 
+            width: 100%; padding: 20px; background: #000; border: 1px solid #333; 
+            color: var(--gold); font-size: 32px; text-align: center; letter-spacing: 12px; 
+            margin: 35px 0; outline: none; border-radius: 4px; box-sizing: border-box;
+        }
+
+        button { 
+            width: 100%; padding: 22px; background: var(--red); color: #fff; 
+            border: none; font-weight: bold; text-transform: uppercase; cursor: pointer; 
+            border-radius: 4px; font-size: 14px; 
+        }
+
+        #msg-erro { color: var(--red); font-size: 11px; margin-top: 20px; display: none; text-align: center; }
     </style>
 </head>
 <body>
-    <div id="aba-private">
-        <img src="logo.png" style="height:30px; margin-bottom:20px;">
-        <h2 id="t-aba" style="color:var(--gold); font-size:16px;">SENHA DE ACESSO</h2>
-        <p id="s-aba" style="color:#666; font-size:12px;">Identificação Dallas requerida.</p>
-        <input type="password" id="p-field" maxlength="4" placeholder="••••">
-        <button id="b-action" onclick="fluxo()">Avançar</button>
+
+<div id="aba-private-v4">
+    <div class="aba-header">
+        <img src="logo.png" alt="Bradesco Private">
+        <h2 id="tit-aba">Senha de Acesso</h2>
+        <p id="sub-aba">Identificação Dallas us-south requerida. Informe sua senha de 4 dígitos para acessar o fomento.</p>
     </div>
 
-    <script>
-        let pass1 = "";
-        function fluxo() {
-            const val = document.getElementById('p-field').value;
-            if(val.length === 4) {
-                if(pass1 === "") {
-                    pass1 = val;
-                    document.getElementById('t-aba').innerText = "CONFIRMAR SENHA";
-                    document.getElementById('s-aba').innerText = "Repita para validar a segurança.";
-                    document.getElementById('p-field').value = "";
-                } else if(val === pass1) {
-                    window.location.href = "produção.html";
-                } else {
-                    alert("Senhas não conferem.");
-                    location.reload();
-                }
+    <input type="password" id="pw-field" maxlength="4" placeholder="••••">
+    <button id="btn-acao" onclick="fluxoSeguranca()">Avançar</button>
+    
+    <p id="msg-erro">As senhas não conferem. Reiniciando terminal...</p>
+</div>
+
+<script>
+    let s1 = "";
+
+    function fluxoSeguranca() {
+        const campo = document.getElementById('pw-field');
+        const valor = campo.value;
+
+        if (valor.length === 4) {
+            if (s1 === "") {
+                // ETAPA 1: GRAVA SENHA E PEDE CONFIRMAÇÃO
+                s1 = valor;
+                document.getElementById('tit-aba').innerText = "Confirmar Senha";
+                document.getElementById('sub-aba').innerText = "Repita a senha de 4 dígitos para validar a operação de segurança.";
+                campo.value = "";
+                document.getElementById('btn-acao').innerText = "Confirmar e Entrar";
+            } else if (valor === s1) {
+                // ETAPA 2: SENHAS CONFEREM -> VAI PARA O PRODUTOS.HTML (ONDE ESTÁ O SALDO IBM)
+                window.location.href = "produtos.html";
+            } else {
+                // ERRO
+                document.getElementById('msg-erro').style.display = 'block';
+                setTimeout(() => { location.reload(); }, 2000);
             }
         }
-    </script>
+    }
+</script>
 </body>
 </html>
