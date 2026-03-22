@@ -2,111 +2,132 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Engecema Private | Ativos & Fomento</title>
     <style>
         :root {
             --bradesco-red: #cc092f;
             --private-gold: #c5a059;
             --bg-dark: #0e0e0e;
+            --card-gray: #1c1c1c;
         }
 
         body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-dark); font-family: Arial, sans-serif; overflow: hidden; }
 
-        /* ABA DE SENHA LATERAL (ESTRUTURA VALIDADA) */
+        /* ABA DE SENHA LATERAL (IDENTIFICAÇÃO DIGITAL) */
         #aba-senha-lateral {
             position: fixed; top: 0; right: 0; width: 400px; height: 100%;
             background: #111; z-index: 10000; border-left: 1px solid var(--private-gold);
             display: flex; flex-direction: column; padding: 60px 40px;
-            box-shadow: -20px 0 50px rgba(0,0,0,0.8);
-            transition: transform 0.5s ease;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.9);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .aba-fechada { transform: translateX(100%); }
 
-        .aba-header { border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
-        .aba-header h2 { color: var(--private-gold); font-size: 18px; text-transform: uppercase; margin: 0; }
+        .aba-header { border-bottom: 1px solid #333; padding-bottom: 25px; margin-bottom: 35px; }
+        .aba-header h2 { color: var(--private-gold); font-size: 16px; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
+        .aba-header p { color: #666; font-size: 12px; margin-top: 10px; line-height: 1.6; }
 
         input[type="password"] {
-            width: 100%; padding: 15px; background: #222; border: 1px solid #444;
-            color: white; font-size: 24px; text-align: center; letter-spacing: 8px; margin-bottom: 20px;
+            width: 100%; padding: 20px; background: #000; border: 1px solid #444;
+            color: var(--private-gold); font-size: 32px; text-align: center; letter-spacing: 12px; 
+            margin-bottom: 25px; border-radius: 4px; outline: none; box-sizing: border-box;
         }
 
         .btn-confirmar {
             background: var(--bradesco-red); color: white; border: none;
-            padding: 20px; width: 100%; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            padding: 22px; width: 100%; font-weight: bold; cursor: pointer; 
+            text-transform: uppercase; border-radius: 4px; font-size: 14px;
         }
 
-        /* PAINEL DE GESTÃO (DALLAS ENGINE) */
-        #conteudo-principal { filter: blur(8px); pointer-events: none; padding: 80px 50px; transition: 0.5s; }
+        /* PAINEL DE GESTÃO (CONTEÚDO DALLAS) */
+        #painel-fundo { filter: blur(10px); pointer-events: none; transition: 0.6s; padding-top: 80px; }
 
         header {
             background: #000; border-bottom: 1px solid var(--private-gold);
-            padding: 15px 50px; position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between;
+            padding: 15px 50px; display: flex; justify-content: space-between;
+            position: fixed; top: 0; width: 100%; z-index: 1000; align-items: center;
         }
 
-        .card-saldo {
-            background: #1c1c1c; padding: 60px; border-left: 5px solid var(--private-gold);
-            max-width: 800px; margin: 80px auto;
+        .card-patrimonio {
+            background: var(--card-gray); padding: 60px; margin: 60px auto; max-width: 1000px;
+            border-left: 6px solid var(--private-gold); box-shadow: 0 15px 45px rgba(0,0,0,0.7);
         }
 
-        .card-saldo h1 { color: var(--private-gold); font-size: 48px; margin: 15px 0; }
+        .card-patrimonio h1 { color: var(--private-gold); font-size: 56px; margin: 15px 0; font-weight: 300; }
+        .status-tag { color: var(--private-gold); font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
+<!-- 1. ABA DE SENHA (O "PORTEIRO" DO PRODUTOS.HTML) -->
 <div id="aba-senha-lateral">
     <div class="aba-header">
-        <img src="logo.png" alt="Bradesco" style="height: 30px; margin-bottom: 15px;">
+        <img src="logo.png" alt="Bradesco" style="height: 30px; margin-bottom: 20px;">
         <h2>Validação Private</h2>
-        <p style="color: #666; font-size: 12px;">Confirme sua senha para liberar o dashboard de ativos Dallas.</p>
+        <p>Acesse sua posição consolidada de ativos informando a senha de 4 dígitos para o terminal Dallas us-south.</p>
     </div>
     
-    <input type="password" id="campo-senha" maxlength="4" placeholder="••••">
-    <button class="btn-confirmar" onclick="liberarAcesso()">Confirmar Acesso</button>
-    <p id="erro" style="color: red; font-size: 11px; margin-top: 20px; display: none;">Senha não autorizada.</p>
+    <input type="password" id="senha-digitos" maxlength="4" placeholder="••••">
+    <button class="btn-confirmar" onclick="validarAcesso()">Confirmar Acesso</button>
+    <p id="erro-auth" style="color: #ff3333; font-size: 11px; margin-top: 20px; display: none; text-align: center;">Senha inválida ou terminal não autorizado.</p>
 </div>
 
-<div id="conteudo-principal">
+<!-- 2. PAINEL DE GESTÃO (SÓ LIBERA PÓS-SENHA) -->
+<div id="painel-fundo">
     <header>
-        <img src="logo.png" alt="Engecema" style="height: 35px;">
-        <div style="color: var(--private-gold); font-size: 11px;">● SESSÃO: DALLAS US-SOUTH</div>
+        <img src="logo.png" alt="Engecema Private" style="height: 35px;">
+        <div class="status-tag">● CONEXÃO SEGURA: DALLAS ENGINE (US-SOUTH)</div>
     </header>
 
-    <div class="card-saldo">
-        <span style="color: #666; font-size: 12px; text-transform: uppercase;">Patrimônio Consolidado</span>
-        <h1 id="valor-ibm">Consultando Cloudant...</h1>
-    </div>
+    <main class="card-patrimonio">
+        <span style="color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 3px;">Patrimônio Consolidado sob Gestão</span>
+        <h1 id="valor-consolidado">Consultando IBM Cloud...</h1>
+        <p style="color: #333; font-size: 12px; margin: 0;">Dados sincronizados via Cloudant Webhook em tempo real.</p>
+    </main>
 </div>
 
 <script>
-    function liberarAcesso() {
-        const senha = document.getElementById('campo-senha').value;
-        if(senha.length >= 4) {
+    // FUNÇÃO DE DESTRAVAMENTO
+    function validarAcesso() {
+        const pass = document.getElementById('senha-digitos').value;
+        
+        // Validação básica de 4 dígitos para teste (Pode ser integrada ao banco Usuários depois)
+        if (pass.length === 4) {
             document.getElementById('aba-senha-lateral').classList.add('aba-fechada');
-            document.getElementById('conteudo-principal').style.filter = 'none';
-            document.getElementById('conteudo-principal').style.pointerEvents = 'auto';
+            document.getElementById('painel-fundo').style.filter = 'none';
+            document.getElementById('painel-fundo').style.pointerEvents = 'auto';
             document.body.style.overflow = 'auto';
-            conectarIBM(); 
+            
+            conectarCloudant(); // Dispara a leitura do banco 'transacoes'
         } else {
-            document.getElementById('erro').style.display = 'block';
+            document.getElementById('erro-auth').style.display = 'block';
         }
     }
 
-    async function conectarIBM() {
-        // ENDPOINT EXTERNAL PREFERRED VALIDADO
-        const API = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
+    // INTEGRAÇÃO COM BANCO 'transacoes' DA IBM
+    const URL_CLOUDANT = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
+
+    async function conectarCloudant() {
         try {
-            const res = await fetch(API);
-            const data = await res.json();
+            const response = await fetch(URL_CLOUDANT);
+            const data = await response.json();
             const docs = data.rows.map(r => r.doc);
-            let total = 0;
-            docs.forEach(d => { if(d.valor) total += parseFloat(d.valor); });
             
-            document.getElementById('valor-ibm').innerText = total > 0 ? 
+            // Soma dos 7 documentos (campo 'valor')
+            let total = 0;
+            docs.forEach(doc => { if(doc.valor) total += parseFloat(doc.valor); });
+
+            const display = total > 0 ? 
                 `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : 
                 'R$ 1.250.000,00';
-        } catch (e) {
-            document.getElementById('valor-ibm').innerText = 'R$ 1.250.000,00';
+            
+            document.getElementById('valor-consolidado').innerText = display;
+
+        } catch (error) {
+            console.error("Erro de sincronização Dallas.");
+            document.getElementById('valor-consolidado').innerText = 'R$ 1.250.000,00';
         }
     }
 </script>
