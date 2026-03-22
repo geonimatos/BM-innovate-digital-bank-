@@ -65,7 +65,7 @@
         <h2>Identificação Digital Requerida</h2>
         <input type="password" id="senha-input" placeholder="••••" maxlength="4">
         <button class="btn-validar" onclick="liberarPainel()">Confirmar e Acessar</button>
-        <p id="erro-auth" style="color: #ff3333; font-size: 11px; margin-top: 15px; display: none;">Chave de segurança inválida.</p>
+        <p id="erro-auth" style="color: #ff3333; font-size: 11px; margin-top: 15px; display: none;">Senha inválida para este terminal.</p>
     </div>
 </div>
 
@@ -99,7 +99,7 @@
         }
     }
 
-    // CONEXÃO COM O ENDPOINT EXTERNAL PREFERRED
+    // CONEXÃO COM O ENDPOINT EXTERNAL PREFERRED (IBM CLOUDANT)
     const API_CLOUDNAT = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
 
     async function conectarBancoCloudant() {
@@ -108,7 +108,7 @@
             const data = await res.json();
             const docs = data.rows.map(r => r.doc);
 
-            // Soma dos ativos no banco de dados
+            // Soma dos ativos no banco de dados 'transacoes'
             let soma = 0;
             docs.forEach(doc => { if(doc.valor) soma += parseFloat(doc.valor); });
 
