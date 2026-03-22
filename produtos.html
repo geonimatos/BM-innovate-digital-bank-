@@ -2,29 +2,40 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bradesco Private | Internet Banking</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <style>
         :root {
             --bradesco-red: #cc092f;
             --private-gold: #c5a059;
             --bg-dark: #0e0e0e;
+            --card-gray: #1c1c1c;
+            --text-light: #d1d1d1;
             --white: #ffffff;
+            --border: #333333;
         }
 
-        /* 1. HEADER ESPELHADO BRADESCO PRIVATE */
-        .top-nav {
-            background-color: var(--bradesco-red);
-            height: 4px;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            z-index: 2000;
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
         }
+
+        /* BARRA SUPERIOR BRADESCO */
+        .top-line { background: var(--bradesco-red); height: 4px; width: 100%; position: fixed; top: 0; z-index: 2000; }
 
         header {
             background: #000;
             border-bottom: 1px solid var(--private-gold);
-            padding: 10px 50px;
+            padding: 15px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -33,116 +44,151 @@
             z-index: 1000;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            color: var(--private-gold);
-            font-size: 12px;
-            text-transform: uppercase;
+        .header-logo { height: 35px; }
+        .user-info { color: var(--private-gold); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* LAYOUT EM GRID (MENU LATERAL + CONTEÚDO) */
+        .main-wrapper { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 70px); }
+
+        /* MENU LATERAL */
+        aside {
+            background: #111;
+            border-right: 1px solid var(--border);
+            padding: 40px 20px;
         }
 
-        /* 2. MENU LATERAL DE SERVIÇOS (ESPELHAMENTO) */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
-
-        .side-menu {
-            background: #151515;
-            padding: 30px 20px;
-            border-right: 1px solid #333;
-        }
-
-        .side-menu ul { list-style: none; padding: 0; }
-        .side-menu li {
-            padding: 15px 0;
+        aside ul { list-style: none; padding: 0; margin: 0; }
+        aside li {
+            padding: 18px 15px;
             border-bottom: 1px solid #222;
-            font-size: 13px;
             color: #888;
+            font-size: 12px;
             cursor: pointer;
             transition: 0.3s;
+            text-transform: uppercase;
         }
-        .side-menu li:hover { color: var(--private-gold); }
+        aside li:hover { color: var(--private-gold); background: #1a1a1a; }
 
-        /* 3. ÁREA DE CONTEÚDO (DALLAS ENGINE) */
-        .content-area { padding: 40px; background: var(--bg-dark); }
-
-        /* REUTILIZANDO SEUS CARDS PREMIUM */
+        /* CONTEÚDO PRINCIPAL (DALLAS ENGINE) */
+        main { padding: 50px; }
+        
         .summary-card {
-            background: #1c1c1c;
-            padding: 25px;
+            background: var(--card-gray);
+            padding: 40px;
             border-left: 4px solid var(--private-gold);
-            margin-bottom: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
         }
+
+        .summary-card span { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px; }
+        .summary-card h2 { margin: 0; color: var(--private-gold); font-weight: 300; font-size: 42px; }
+
+        .bank-card {
+            background: var(--card-gray);
+            padding: 40px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            max-width: 500px;
+        }
+
+        .btn-private {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: var(--private-gold);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer { text-align: center; padding: 60px; color: #444; font-size: 10px; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
-<div class="top-nav"></div>
+<div class="top-line"></div>
 
 <header>
-    <img src="logo.png" alt="Bradesco Private" style="height: 35px;">
-    <div class="user-profile">
-        <span>Olá, Cliente Private | Ag: 0001 | Conta: 123456-7</span>
-        <button style="margin-left:20px; background:none; border:1px solid var(--private-gold); color:var(--private-gold); padding:5px 15px; cursor:pointer;">SAIR</button>
-    </div>
+    <img src="logo.png" alt="Bradesco Private" class="header-logo">
+    <div id="session-status" class="user-info">● SESSÃO SEGURA: DALLAS (US-SOUTH)</div>
 </header>
 
-<div class="main-layout">
-    <!-- MENU LATERAL BRADESCO -->
-    <aside class="side-menu">
+<div class="main-wrapper">
+    <aside>
         <ul>
-            <li onclick="location.href='index.html'">PÁGINA INICIAL</li>
-            <li onclick="location.href='admin.html'">GESTÃO PATRIMONIAL</li>
-            <li onclick="location.href='cadastro.html'">MEUS DADOS</li>
-            <li>INVESTIMENTOS</li>
-            <li>CÂMBIO & FOMENTO</li>
-            <li>CARTÕES BLACK</li>
+            <li onclick="location.href='index.html'">Home</li>
+            <li onclick="location.href='cadastro.html'">Minha Conta</li>
+            <li onclick="location.href='admin.html'">Painel de Gestão</li>
+            <li>Investimentos</li>
+            <li>Câmbio / Fomento</li>
+            <li onclick="location.href='index.html'" style="color: var(--bradesco-red);">Sair com Segurança</li>
         </ul>
     </aside>
 
-    <!-- SEU DASHBOARD INTEGRADO -->
-    <main class="content-area">
-        <div id="session-status" style="color: var(--private-gold); font-size: 10px; margin-bottom: 20px;">● SESSÃO SEGURA: DALLAS US-SOUTH</div>
-        
+    <main>
         <div class="summary-card">
-            <span>Saldo Consolidado</span>
-            <h2 id="saldo-corrente" style="color: var(--private-gold); font-size: 38px;">R$ 0,00</h2>
+            <span>Patrimônio Total Consolidado</span>
+            <h2 id="saldo-corrente">R$ 0,00</h2>
         </div>
 
-        <!-- Inclusão do seu Card de PIX e outros elementos -->
-        <div id="card-pix" class="bank-card" style="background:#1c1c1c; padding:30px; border:1px solid #333;">
-            <h4 style="color:white;">TRANSFERÊNCIAS PIX</h4>
-            <p style="color:#666;">Canal exclusivo para fomento ativo.</p>
-            <button id="btn-pix" style="width:100%; padding:15px; background:var(--private-gold); border:none; font-weight:bold; cursor:pointer;">ACESSAR SISTEMA</button>
+        <div class="bank-card">
+            <h4 style="color:white; margin-top:0;">Operações de Fomento</h4>
+            <p style="color:#777; font-size:14px; line-height:1.6;">Acesse o sistema de liquidação instantânea via Cloudant Webhook.</p>
+            <button class="btn-private">Acessar Plataforma PIX</button>
         </div>
     </main>
 </div>
 
+<footer>&copy; 2026 ENGECEMA PRIVATE - DALLAS ENGINE</footer>
+
 <script>
-    // INTEGRAÇÃO COM O SEU CLOUDANT
+    // 1. TRAVA DE SEGURANÇA (VERIFICAÇÃO DE ORIGEM)
+    // Se o usuário clicar em "OK" no index e pular o cadastro, ele será redirecionado
+    (function verificarAcesso() {
+        const veioDoCadastro = document.referrer.includes('cadastro.html');
+        // Se quiser testar o redirecionamento agora, remova o comentário da linha abaixo:
+        // if (!veioDoCadastro) { window.location.href = 'cadastro.html'; }
+    })();
+
+    // 2. INTEGRAÇÃO IBM CLOUDANT
     const API_ENDPOINT = 'https://7f404dab-9bd6-4dc7-8b0b-e0e4a4283d5c-bluemix.cloudantnosqldb.appdomain.cloud';
 
-    async function updateDashboard() {
+    async function fetchData() {
         try {
             const response = await fetch(API_ENDPOINT);
+            if (!response.ok) throw new Error();
+            
             const result = await response.json();
             const docs = result.rows.map(row => row.doc);
 
-            // Soma dos valores do banco 'transações'
+            // Soma os valores do banco 'transações'
             let total = 0;
-            docs.forEach(d => { if(d.valor) total += parseFloat(d.valor); });
+            docs.forEach(doc => {
+                if(doc.valor) total += parseFloat(doc.valor);
+            });
 
-            document.getElementById('saldo-corrente').innerText = total > 0 ? 
+            // Atualiza o card de saldo
+            const displaySaldo = total > 0 ? 
                 `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : 
                 'R$ 1.250.000,00';
             
-        } catch (e) {
-            console.log("Erro de sincronização Cloudant");
+            document.getElementById('saldo-corrente').innerText = displaySaldo;
+            document.getElementById('session-status').innerText = '● SESSÃO ATIVA: CONEXÃO ESTÁVEL';
+
+        } catch (error) {
+            console.error('Erro de conexão Cloudant');
+            document.getElementById('session-status').innerText = '● MODO OFFLINE';
         }
     }
-    updateDashboard();
+
+    fetchData();
+    setInterval(fetchData, 60000); // Atualização automática (1 min)
 </script>
 
 </body>
