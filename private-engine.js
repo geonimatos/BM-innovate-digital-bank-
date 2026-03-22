@@ -1,74 +1,61 @@
 /**
- * ENGECEMA PRIVATE - ENGINE DE SEGURANÇA DALLAS
- * FOCO: BOTÃO AZUL (OK) -> ABA SENHA -> ABA CONFIRMAR -> PRODUÇÃO.HTML
+ * ENGECEMA PRIVATE - ENGINE DALLAS (US-SOUTH)
+ * FOCO: INJEÇÃO DE ABAS DE SEGURANÇA SEM ALTERAR HTMLS IMUTÁVEIS
  */
 
-const EngecemaPrivate = {
+const PrivateEngine = {
     init() {
-        // 1. Monitora o clique no botão azul (OK) assim que a página carrega
+        // Monitora o clique no botão azul (OK) no index.html imutável
         document.addEventListener('click', (e) => {
-            const target = e.target;
-            // Identifica o botão pelo texto "OK" ou classes comuns de botões azuis
-            if (target.innerText === "OK" || target.value === "OK" || target.classList.contains('btn-blue')) {
-                e.preventDefault(); // Trava o redirecionamento automático
+            if (e.target.innerText === "OK" || e.target.value === "OK") {
+                e.preventDefault(); 
                 this.gerarAbaSenha();
             }
         });
     },
 
-    // 2. GERA A PRIMEIRA ABA (SENHA)
     gerarAbaSenha() {
-        this.removerAbasAntigas();
         const aba = document.createElement('div');
-        aba.id = 'aba-senha-private';
+        aba.id = 'seguranca-private-aba';
         aba.style = "position:fixed; top:0; right:0; width:400px; height:100vh; background:#111; z-index:999999; border-left:2px solid #c5a059; padding:50px; color:#fff; display:flex; flex-direction:column; font-family:Arial;";
         aba.innerHTML = `
             <h2 style="color:#c5a059; text-transform:uppercase; font-size:16px;">Senha de Acesso</h2>
-            <p style="color:#666; font-size:12px;">Informe sua senha de 4 dígitos para Dallas us-south.</p>
-            <input type="password" id="p1" maxlength="4" style="width:100%; padding:20px; background:#000; border:1px solid #333; color:#c5a059; font-size:30px; text-align:center; margin:30px 0;">
-            <button id="go-confirm" style="width:100%; padding:20px; background:#cc092f; color:#fff; border:none; font-weight:bold; cursor:pointer; text-transform:uppercase;">Avançar</button>
+            <p style="color:#666; font-size:12px;">Identificação Dallas us-south.</p>
+            <input type="password" id="s1" maxlength="4" style="width:100%; padding:20px; background:#000; border:1px solid #333; color:#c5a059; font-size:30px; text-align:center; margin:30px 0;">
+            <button id="btn-p1" style="width:100%; padding:20px; background:#cc092f; color:#fff; border:none; font-weight:bold; cursor:pointer;">AVANÇAR</button>
         `;
         document.body.appendChild(aba);
 
-        document.getElementById('go-confirm').onclick = () => {
-            if(document.getElementById('p1').value.length === 4) {
-                this.gerarAbaConfirmar(document.getElementById('p1').value);
+        document.getElementById('btn-p1').onclick = () => {
+            if(document.getElementById('s1').value.length === 4) {
+                const s1 = document.getElementById('s1').value;
+                aba.remove();
+                this.gerarAbaConfirmar(s1);
             }
         };
     },
 
-    // 3. GERA A SEGUNDA ABA (CONFIRMAR)
     gerarAbaConfirmar(senhaOriginal) {
-        this.removerAbasAntigas();
         const aba = document.createElement('div');
-        aba.id = 'aba-confirmar-private';
         aba.style = "position:fixed; top:0; right:0; width:400px; height:100vh; background:#111; z-index:999999; border-left:2px solid #c5a059; padding:50px; color:#fff; display:flex; flex-direction:column; font-family:Arial;";
         aba.innerHTML = `
             <h2 style="color:#c5a059; text-transform:uppercase; font-size:16px;">Confirmar Senha</h2>
-            <p style="color:#666; font-size:12px;">Repita a senha para validação de segurança.</p>
-            <input type="password" id="p2" maxlength="4" style="width:100%; padding:20px; background:#000; border:1px solid #333; color:#c5a059; font-size:30px; text-align:center; margin:30px 0;">
-            <button id="finish-auth" style="width:100%; padding:20px; background:#cc092f; color:#fff; border:none; font-weight:bold; cursor:pointer; text-transform:uppercase;">Confirmar e Entrar</button>
+            <p style="color:#666; font-size:12px;">Repita a senha para validar.</p>
+            <input type="password" id="s2" maxlength="4" style="width:100%; padding:20px; background:#000; border:1px solid #333; color:#c5a059; font-size:30px; text-align:center; margin:30px 0;">
+            <button id="btn-p2" style="width:100%; padding:20px; background:#cc092f; color:#fff; border:none; font-weight:bold; cursor:pointer;">CONFIRMAR E ENTRAR</button>
         `;
         document.body.appendChild(aba);
 
-        document.getElementById('finish-auth').onclick = () => {
-            if(document.getElementById('p2').value === senhaOriginal) {
-                // SUCESSO: Direciona para o produção.html (onde o saldo IBM está configurado)
-                window.location.href = "produção.html";
+        document.getElementById('btn-p2').onclick = () => {
+            if(document.getElementById('s2').value === senhaOriginal) {
+                // SUCESSO: Libera o acesso para o admin.html (fluxo original)
+                window.location.href = "admin.html";
             } else {
-                alert("As senhas não conferem. Reiniciando validação.");
-                this.gerarAbaSenha();
+                alert("As senhas não conferem.");
+                location.reload();
             }
         };
-    },
-
-    removerAbasAntigas() {
-        ['aba-senha-private', 'aba-confirmar-private'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.remove();
-        });
     }
 };
 
-// Inicia o motor assim que o site carregar
-document.addEventListener('DOMContentLoaded', () => EngecemaPrivate.init());
+document.addEventListener('DOMContentLoaded', () => PrivateEngine.init());
